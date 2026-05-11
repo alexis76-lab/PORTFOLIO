@@ -294,7 +294,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const formatRelativeTime = value => {
       const date = new Date(value);
       if (Number.isNaN(date.getTime())) {
-        return "recent";
+        return "récent";
       }
 
       const diffMs = date.getTime() - Date.now();
@@ -339,7 +339,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const normalizeFeedItem = (item, label) => {
       const rawDate = item.pubDate || item.isoDate || item.updated || item.published || "";
       const parsedDate = new Date(rawDate);
-      const description = truncateText(stripHtml(item.description || item.content || item.summary || "Article de veille cybersecurite."));
+      const description = truncateText(stripHtml(item.description || item.content || item.summary || "Article de veille cybersécurité."));
       const lowerTitle = (item.title || "").toLowerCase();
       const lowerDescription = description.toLowerCase();
       const isSecurityAlert = lowerTitle.includes("alerte")
@@ -439,11 +439,11 @@ document.addEventListener("DOMContentLoaded", () => {
             <span class="veille-age">${escapeHtml(formatRelativeTime(item.publishedAt))}</span>
           </div>
           <div class="veille-flags">
-            ${item.isSecurityAlert ? '<span class="veille-flag alert">Alerte de securite</span>' : ""}
+            ${item.isSecurityAlert ? '<span class="veille-flag alert">Alerte de sécurité</span>' : ""}
             ${item.source === "CERT-FR" ? '<span class="veille-flag cert">Source officielle CERT-FR</span>' : ""}
           </div>
           <h3 class="veille-title">${escapeHtml(item.title)}</h3>
-          <p class="veille-desc">${escapeHtml(item.description || "Article de veille cybersecurite.")}</p>
+          <p class="veille-desc">${escapeHtml(item.description || "Article de veille cybersécurité.")}</p>
           <a class="veille-link" href="${escapeHtml(item.link)}" target="_blank" rel="noopener noreferrer">
             Lire l'article
             <span aria-hidden="true">&rarr;</span>
@@ -516,11 +516,11 @@ document.addEventListener("DOMContentLoaded", () => {
       const cacheIsFresh = cachedVeille && (Date.now() - cachedVeille.timestamp < veilleCacheDuration);
 
       if (!forceRefresh && cacheIsFresh) {
-        hydrateVeille(cachedVeille.items, cachedVeille.timestamp, "Veille chargee depuis le cache local.");
+        hydrateVeille(cachedVeille.items, cachedVeille.timestamp, "Veille chargée depuis le cache local.");
         return;
       }
 
-      setVeilleStatus("Mise a jour des flux RSS en cours...", "info");
+      setVeilleStatus("Mise à jour des flux RSS en cours...", "info");
       veilleRefresh.disabled = true;
 
       try {
@@ -530,11 +530,11 @@ document.addEventListener("DOMContentLoaded", () => {
           .flatMap(result => result.value);
 
         if (!loadedItems.length) {
-          throw new Error("Aucun article n'a pu etre recupere.");
+          throw new Error("Aucun article n'a pu être récupéré.");
         }
 
         saveCachedVeille(loadedItems);
-        hydrateVeille(loadedItems, Date.now(), "Veille RSS mise a jour automatiquement.");
+        hydrateVeille(loadedItems, Date.now(), "Veille RSS mise à jour automatiquement.");
       } catch {
         if (cachedVeille?.items?.length) {
           hydrateVeille(cachedVeille.items, cachedVeille.timestamp, "Flux indisponibles pour le moment, affichage du dernier cache disponible.");
