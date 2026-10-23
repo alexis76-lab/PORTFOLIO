@@ -190,7 +190,6 @@ button:focus-visible{
 }
 .social-btn:hover{transform:translateY(-5px);}
 .social-btn.linkedin{background:#0a66c2;color:white;}
-.social-btn.whatsapp{background:#25D366;color:white;}
 
 /* ===== SECTIONS ===== */
 section{
