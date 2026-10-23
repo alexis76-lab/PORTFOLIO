@@ -5,153 +5,118 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Activité support IT : gestion d'environ 490 tickets, accompagnement utilisateur, comptes Active Directory, Microsoft 365 et droits d'accès.">
   <title>Activité support - Gestion des tickets</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#0c0c0d" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#fafafa" media="(prefers-color-scheme: light)">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:site_name" content="Alexis Beaufils - Portfolio BTS SIO SISR">
+  <meta property="og:title" content="Activité support - Gestion des tickets">
+  <meta property="og:description" content="Activité support IT : gestion d'environ 490 tickets, accompagnement utilisateur, comptes Active Directory, Microsoft 365 et droits d'accès.">
+  <meta name="twitter:card" content="summary">
+  <meta name="color-scheme" content="dark light">
+  <script>
+    (function () {
+      var theme = null;
+      try { theme = localStorage.getItem("theme"); } catch (error) {}
+      if (theme !== "light" && theme !== "dark") {
+        theme = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+      }
+      document.documentElement.dataset.theme = theme;
+    })();
+  </script>
   <link rel="stylesheet" href="style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <header class="project-header">
+  <header>
     <nav>
-      <ul>
-        <li><a href="index.html#projets">&#8592; Retour</a></li>
-      </ul>
-      <button class="theme-toggle" type="button" aria-label="Changer de thème"></button>
+      <a href="index.html" class="brand" aria-label="Alexis Beaufils - retour à l'accueil">
+        <span class="brand-mark">AB</span>
+        <span class="brand-name">Alexis Beaufils</span>
+      </a>
+      <div class="nav-actions">
+        <a href="index.html#projets" class="case-back">&#8592; Tous les projets</a>
+        <button class="theme-toggle" type="button" aria-label="Changer de thème"></button>
+      </div>
     </nav>
   </header>
 
-  <main class="project-page">
-    <section class="project-hero fade-in">
-      <img src="Technicien IT dans un environnement moderne.png" alt="Gestion des tickets incidents" class="project-image parallax">
+  <main class="case">
+    <section class="case-hero fade-in">
+      <div class="case-badges">
+        <span class="case-badge">Expérience professionnelle</span>
+      </div>
       <h1>Support utilisateurs et gestion d'environ 490 tickets</h1>
-      <p class="subtitle">Activité de support utilisateur en environnement professionnel avec traitement d'incidents, demandes et suivi via GLPI.</p>
+      <p class="case-lead">Activité de support utilisateur en environnement professionnel avec traitement d'incidents, demandes et suivi via GLPI.</p>
+      <img src="technicien-it-environnement-moderne.jpg" alt="Gestion des tickets incidents" class="project-image case-banner">
     </section>
 
-    <section class="project-summary fade-in">
-      <div class="project-panel">
-        <h2>Contexte</h2>
-        <p>Cette activité regroupe un volume important de tickets traités au quotidien dans un cadre professionnel. Elle montre ma capacité à prioriser, dépanner rapidement et accompagner les utilisateurs sur des demandes très variées, tout en gardant une trace des interventions dans GLPI.</p>
-      </div>
-      <aside class="project-panel">
+    <div class="case-layout">
+      <aside class="case-facts" aria-label="L'activité en bref">
+        <h2>En bref</h2>
+        <dl>
+          <div><dt>Type</dt><dd>Support en environnement professionnel</dd></div>
+          <div><dt>Volume traité</dt><dd>Environ 490 tickets</dd></div>
+          <div><dt>Période</dt><dd>Depuis mes débuts de stage à la mairie de Canteleu jusqu'à aujourd'hui</dd></div>
+          <div><dt>Cadre</dt><dd>Support quotidien avec GLPI</dd></div>
+        </dl>
         <h3>Outils et environnement</h3>
-        <div class="project-tags">
-          <span class="project-tag">Support utilisateurs</span>
-          <span class="project-tag">GLPI</span>
-          <span class="project-tag">490 tickets</span>
+        <div class="case-tags">
+          <span>GLPI</span>
+          <span>Active Directory</span>
+          <span>Microsoft 365</span>
+          <span>VPN</span>
+          <span>SimonsVoss</span>
         </div>
       </aside>
-    </section>
 
-    <section class="project-highlights fade-in">
-      <article class="highlight-card">
-        <strong>Type</strong>
-        <p>Support en environnement professionnel.</p>
-      </article>
-      <article class="highlight-card">
-        <strong>Volume traité</strong>
-        <p>Environ 490 tickets.</p>
-      </article>
-      <article class="highlight-card">
-        <strong>Période</strong>
-        <p>Depuis mes débuts de stage à la mairie de Canteleu jusqu'à aujourd'hui.</p>
-      </article>
-      <article class="highlight-card">
-        <strong>Cadre</strong>
-        <p>Support quotidien avec GLPI.</p>
-      </article>
-    </section>
+      <article class="case-main">
+        <section class="case-section fade-in">
+          <h2>En résumé</h2>
+          <p>Cette activité regroupe un volume important de tickets traités au quotidien dans un cadre professionnel. Elle montre ma capacité à prioriser, dépanner rapidement et accompagner les utilisateurs sur des demandes très variées, tout en gardant une trace des interventions dans GLPI.</p>
+        </section>
 
-    <section class="project-section project-section-card fade-in">
-      <h2>Activités réalisées</h2>
-      <div class="project-grid">
-        <div>
-          <ul>
-            <li>Remplacement et déploiement de postes, écrans, imprimantes et téléphones.</li>
-            <li>Création de comptes Active Directory et boîtes mail Microsoft 365.</li>
-            <li>Assistance à l'installation et à l'usage du VPN.</li>
+        <section class="case-section fade-in">
+          <h2>Points clés</h2>
+          <ul class="key-points">
+            <li><strong>Matériel :</strong> postes, écrans, imprimantes et téléphones</li>
+            <li><strong>Comptes :</strong> Active Directory et boîtes mail Microsoft 365</li>
+            <li><strong>VPN :</strong> installation et assistance</li>
+            <li><strong>Droits</strong> sur les fichiers et dossiers partagés</li>
+            <li><strong>Badges d'accès</strong> avec SimonsVoss</li>
+            <li><strong>Incidents</strong> résolus avec des prestataires externes</li>
           </ul>
-        </div>
-        <div>
-          <ul>
-            <li>Gestion des droits sur les fichiers et dossiers partagés.</li>
-            <li>Création de badges d'accès avec SimonsVoss.</li>
-            <li>Participation à la résolution d'incidents avec prestataires externes.</li>
-          </ul>
-        </div>
-      </div>
-    </section>
+        </section>
 
-    <section class="project-section project-section-card fade-in">
-      <h2>Difficultés et points d'attention</h2>
-      <ul>
-        <li>Prioriser correctement les demandes selon leur impact sur l'activité.</li>
-        <li>Communiquer de manière claire avec les utilisateurs.</li>
-      </ul>
-    </section>
-
-    <section class="project-section project-section-card fade-in">
-      <h2>Captures GLPI</h2>
-      <div class="project-gallery">
-        <figure>
-          <img src="glpi-assignements.png" alt="Classement des assignations de tickets GLPI">
-          <figcaption>Vue GLPI mettant en avant mes assignations de tickets avec un volume proche de 490 demandes traitées.</figcaption>
-        </figure>
-        <figure>
-          <img src="glpi-ticket.png" alt="Tableau de bord GLPI avec les indicateurs de tickets">
-          <figcaption>Indicateurs globaux du support dans GLPI : tickets résolus, fermés, assignés et suivi des demandes en cours.</figcaption>
-        </figure>
-      </div>
-    </section>
-
-    <section class="project-section project-section-card fade-in estimation-section">
-      <h2>Estimation (temps et coût HT)</h2>
-      <div class="estimation-card">
-        <div class="estimation-item">
-          <span>Temps total estimé</span>
-          <strong>122,5 h</strong>
-        </div>
-        <div class="estimation-item">
-          <span>1) Main-d'œuvre : traitement, suivi et clôture d'environ 490 tickets</span>
-          <strong>= 1 472,45 euros</strong>
-        </div>
-        <div class="estimation-item">
-          <span>2) Matériel : postes, écrans, imprimantes et équipements selon les tickets</span>
-          <strong>= non chiffré</strong>
-        </div>
-        <div class="estimation-item">
-          <span>3) Licence : GLPI et outils d'entreprise déjà en production</span>
-          <strong>= 0,00 euro</strong>
-        </div>
-        <div class="estimation-item">
-          <span>4) Jours-homme</span>
-          <strong>= 17,5 j/h</strong>
-        </div>
-        <div class="estimation-item total">
-          <span>Coût total estimé HT</span>
-          <strong>= 1 472,45 euros</strong>
-        </div>
-        <p class="estimation-note">Estimation hors taxes basée sur une moyenne de 15 minutes par ticket et un taux horaire de 12,02 euros HT.</p>
-      </div>
-    </section>
-
-    <section class="project-section project-section-card fade-in">
-      <h2>Compétences BTS SIO SISR mobilisées</h2>
-      <ul>
-        <li>Accompagner les utilisateurs dans l'utilisation et la résolution d'incidents.</li>
-        <li>Administrer des comptes, accès et services dans un cadre professionnel.</li>
-        <li>Contribuer à la qualité du service informatique de la ville.</li>
-      </ul>
-    </section>
-
-    <div class="project-buttons fade-in">
-      <a href="index.html#projets" class="btn">&#8592; Retour au portfolio</a>
+        <section class="case-section fade-in">
+          <h2>Pour aller plus loin</h2>
+          <p class="deep-links-note">Chaque lien s'ouvre dans un nouvel onglet.</p>
+          <div class="deep-links">
+            <a href="projet5-detail.html#captures-glpi" target="_blank" rel="noopener"><strong>Captures GLPI</strong><span>Assignations et indicateurs du support</span></a>
+            <a href="projet5-detail.html#activites-realisees" target="_blank" rel="noopener"><strong>Activités réalisées</strong><span>Le détail des interventions</span></a>
+            <a href="projet5-detail.html#difficultes-et-points-d-attention" target="_blank" rel="noopener"><strong>Difficultés et points d'attention</strong><span>Priorisation et communication</span></a>
+            <a href="projet5-detail.html#estimation-temps-et-cout-ht" target="_blank" rel="noopener"><strong>Estimation temps et coût</strong><span>Calcul sur la base de 15 min par ticket</span></a>
+            <a href="projet5-detail.html#competences-bts-sio-sisr-mobilisees" target="_blank" rel="noopener"><strong>Compétences BTS SIO</strong><span>Compétences du référentiel mobilisées</span></a>
+          </div>
+        </section>
+      </article>
     </div>
+
+    <nav class="case-pager" aria-label="Autres projets">
+      <a href="homelab.html" class="case-pager-prev">
+        <span>&#8592; Projet précédent</span>
+        <strong>Homelab auto-hébergé</strong>
+      </a>
+    </nav>
   </main>
 
-  <footer>
-    <p>&copy; <span id="year"></span> Alexis Beaufils - BTS SIO</p>
+  <footer class="site-footer">
+    <p class="footer-bottom">&copy; <span id="year"></span> Alexis Beaufils · BTS SIO SISR · <a href="index.html#contact">Me contacter</a></p>
   </footer>
 
-  <button id="scrollTopBtn" title="Retour en haut">&#8593;</button>
+  <button id="scrollTopBtn" type="button" title="Retour en haut" aria-label="Retour en haut">&#8593;</button>
 
   <script src="script.js" defer></script>
 </body>

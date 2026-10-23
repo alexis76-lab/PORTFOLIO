@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Projet Homelab : infrastructure auto-hébergée sous Docker sur une VM Debian, avec reverse proxy HTTPS, PKI interne, supervision, durcissement et accès distant via VPN.">
+  <title>Détail - Homelab - infrastructure auto-hébergée sous Docker</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#0c0c0d" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#fafafa" media="(prefers-color-scheme: light)">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:site_name" content="Alexis Beaufils - Portfolio BTS SIO SISR">
+  <meta property="og:title" content="Détail - Homelab - infrastructure auto-hébergée sous Docker">
+  <meta property="og:description" content="Projet Homelab : infrastructure auto-hébergée sous Docker sur une VM Debian, avec reverse proxy HTTPS, PKI interne, supervision, durcissement et accès distant via VPN.">
+  <meta name="twitter:card" content="summary">
+  <meta name="color-scheme" content="dark light">
+  <script>
+    (function () {
+      var theme = null;
+      try { theme = localStorage.getItem("theme"); } catch (error) {}
+      if (theme !== "light" && theme !== "dark") {
+        theme = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+      }
+      document.documentElement.dataset.theme = theme;
+    })();
+  </script>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="index.html" class="brand" aria-label="Alexis Beaufils - retour à l'accueil">
+        <span class="brand-mark">AB</span>
+        <span class="brand-name">Alexis Beaufils</span>
+      </a>
+      <div class="nav-actions">
+        <a href="homelab.html" class="case-back">&#8592; Résumé du projet</a>
+        <button class="theme-toggle" type="button" aria-label="Changer de thème"></button>
+      </div>
+    </nav>
+  </header>
+
+  <main class="case">
+    <section class="case-hero fade-in">
+      <div class="case-badges">
+        <span class="case-badge detail">Version détaillée</span>
+        <span class="case-badge">Projet personnel</span>
+        <span class="case-badge">En production</span>
+      </div>
+      <h1>Homelab — infrastructure auto-hébergée sous Docker</h1>
+      <p class="case-lead">Conception, déploiement, sécurisation et supervision d'une infrastructure de services auto-hébergés sur une machine virtuelle Debian, accessible en HTTPS et à distance via VPN.</p>
+      <figure class="shot shot-banner">
+        <div class="shot-frame" data-file="homelab-dashboard.png">
+          <img src="images/homelab/homelab-dashboard.png" alt="Tableau de bord Homepage regroupant les services du homelab">
+        </div>
+        <figcaption>Tableau de bord Homepage : accès aux services et état des conteneurs en temps réel.</figcaption>
+      </figure>
+    </section>
+
+    <div class="case-layout">
+      <aside class="case-facts" aria-label="Le projet en bref">
+        <h2>En bref</h2>
+        <dl>
+          <div><dt>Type</dt><dd>Projet personnel</dd></div>
+          <div><dt>Période</dt><dd>Octobre 2026</dd></div>
+          <div><dt>Statut</dt><dd>En production sur mon poste, évolutions prévues</dd></div>
+          <div><dt>Hébergement</dt><dd>VM Debian 12 sous VMware Workstation</dd></div>
+        </dl>
+        <h3>Technologies</h3>
+        <div class="case-tags">
+          <span>Linux</span>
+          <span>Debian</span>
+          <span>Docker</span>
+          <span>Docker Compose</span>
+          <span>Portainer</span>
+          <span>Reverse proxy</span>
+          <span>Nginx</span>
+          <span>PKI</span>
+          <span>HTTPS</span>
+          <span>DNS</span>
+          <span>AdGuard Home</span>
+          <span>VPN</span>
+          <span>WireGuard</span>
+          <span>Tailscale</span>
+          <span>Supervision</span>
+          <span>Uptime Kuma</span>
+          <span>Durcissement</span>
+          <span>SSH</span>
+          <span>Fail2ban</span>
+          <span>Documentation</span>
+        </div>
+      </aside>
+
+      <article class="case-main">
+        <section class="case-section" id="contexte">
+          <h2>Contexte</h2>
+          <p>Étudiant en BTS SIO option SISR, en alternance, je voulais un environnement personnel pour pratiquer l'administration système et réseau en dehors des TP : déployer de vrais services utiles au quotidien, les sécuriser, les superviser et diagnostiquer les pannes, comme dans une infrastructure d'entreprise.</p>
+          <p>Le labo tourne sur une machine virtuelle VMware de mon PC portable, ce qui me permet de l'utiliser partout (maison, cours, alternance).</p>
+        </section>
+
+        <section class="case-section" id="objectifs">
+          <h2>Objectifs</h2>
+          <ul class="case-list">
+            <li>Monter un serveur Linux et y déployer des services conteneurisés, gérés de façon centralisée.</li>
+            <li>Remplacer les accès par IP et port par des noms de domaine internes, en HTTPS.</li>
+            <li>Mettre en place une autorité de certification interne (PKI).</li>
+            <li>Superviser les services et être alerté en cas de panne ou de mise à jour disponible.</li>
+            <li>Durcir le serveur (SSH, mises à jour, protection contre la force brute).</li>
+            <li>Accéder au labo depuis d'autres appareils (téléphone, PC fixe) sans exposer aucun port sur Internet.</li>
+            <li>Documenter l'ensemble dans un wiki auto-hébergé.</li>
+          </ul>
+        </section>
+
+        <section class="case-section" id="architecture">
+          <h2>Architecture</h2>
+          <div class="archi" role="img" aria-label="Schéma d'architecture du homelab : les clients (PC portable, PC fixe, smartphone) accèdent au serveur directement ou via le VPN Tailscale ; les noms internes en .lan sont résolus par le fichier hosts ou AdGuard Home ; dans VMware Workstation, une VM Debian 12 en réseau NAT avec IP fixe héberge Nginx Proxy Manager, point d'entrée HTTPS, devant neuf services ; Diun et Uptime Kuma envoient des alertes sur Discord.">
+            <div class="archi-layer">
+              <span class="archi-label">Clients</span>
+              <div class="archi-row">
+                <span class="archi-node">PC portable (Windows)</span>
+                <span class="archi-node">PC fixe</span>
+                <span class="archi-node">Smartphone</span>
+              </div>
+            </div>
+
+            <div class="archi-layer archi-split">
+              <div>
+                <span class="archi-label">Accès distant</span>
+                <div class="archi-node archi-node-wide is-secure">
+                  <strong>Tunnel VPN Tailscale (WireGuard)</strong>
+                  <span>Smartphone et PC fixe reliés au serveur, sans port ouvert sur la box</span>
+                </div>
+              </div>
+              <div>
+                <span class="archi-label">Résolution des noms</span>
+                <div class="archi-node archi-node-wide">
+                  <strong>Domaines internes en .lan</strong>
+                  <span>Fichier hosts sur les postes ; AdGuard Home disponible comme DNS</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="archi-host">
+              <span class="archi-label">Hyperviseur : VMware Workstation</span>
+              <div class="archi-vm">
+                <span class="archi-vm-title">VM Debian 12 · réseau NAT, IP fixe</span>
+
+                <div class="archi-node archi-node-wide is-entry">
+                  <strong>Nginx Proxy Manager · ports 80 / 443</strong>
+                  <span>Point d'entrée unique · certificats de l'AC interne · redirection HTTP &#8594; HTTPS</span>
+                </div>
+
+                <div class="archi-services" aria-label="Services derrière le proxy">
+                  <span>Homepage</span>
+                  <span>Portainer</span>
+                  <span>AdGuard Home</span>
+                  <span>Uptime Kuma</span>
+                  <span>Jellyfin</span>
+                  <span>Immich</span>
+                  <span>IT-Tools</span>
+                  <span>Stirling-PDF</span>
+                  <span>Wiki.js</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="archi-layer">
+              <span class="archi-label">Transverse</span>
+              <div class="archi-node archi-node-wide is-alert">
+                <strong>Diun + Uptime Kuma &#8594; alertes Discord</strong>
+                <span>Veille des mises à jour d'images et notifications de panne</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="case-section" id="services-deployes">
+          <h2>Services déployés</h2>
+          <table class="data-table">
+            <thead>
+              <tr><th scope="col">Service</th><th scope="col">Rôle</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Docker + Portainer</td><td>Moteur de conteneurs et interface de gestion centralisée (stacks Docker Compose)</td></tr>
+              <tr><td>Nginx Proxy Manager</td><td>Reverse proxy : un nom de domaine interne par service, HTTPS forcé</td></tr>
+              <tr><td>AdGuard Home</td><td>Serveur DNS filtrant (publicités, traqueurs) et réécritures DNS internes</td></tr>
+              <tr><td>Homepage</td><td>Tableau de bord des services, état des conteneurs en temps réel</td></tr>
+              <tr><td>Uptime Kuma</td><td>Supervision HTTP et DNS de chaque service, alertes Discord personnalisées</td></tr>
+              <tr><td>Diun</td><td>Alerte Discord lorsqu'une nouvelle version d'une image Docker est publiée</td></tr>
+              <tr><td>Jellyfin</td><td>Serveur multimédia</td></tr>
+              <tr><td>Immich</td><td>Photothèque auto-hébergée avec sauvegarde depuis le smartphone</td></tr>
+              <tr><td>IT-Tools, Stirling-PDF</td><td>Outils techniques et traitement de PDF en local</td></tr>
+              <tr><td>Wiki.js</td><td>Documentation technique du projet</td></tr>
+              <tr><td>Tailscale</td><td>VPN maillé (WireGuard) pour l'accès distant sécurisé</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section class="case-section" id="realisation-etape-par-etape">
+          <h2>Réalisation, étape par étape</h2>
+          <ol class="case-steps">
+            <li>
+              <strong>Socle :</strong> VM Debian 12 minimale (sans interface graphique), IP fixe hors de la plage DHCP, installation de Docker depuis le dépôt officiel, gestion par Portainer.
+              <figure class="shot">
+                <div class="shot-frame" data-file="homelab-portainer.png">
+                  <img src="images/homelab/homelab-portainer.png" alt="Liste des stacks Docker Compose dans Portainer">
+                </div>
+                <figcaption>Liste des stacks dans Portainer.</figcaption>
+              </figure>
+            </li>
+            <li><strong>Services :</strong> déploiement de chaque service en stack Docker Compose, données persistantes organisées dans <code>/opt</code> (configurations) et <code>/srv</code> (données utilisateur), conteneurs exécutés sans root quand c'est possible, médias montés en lecture seule.</li>
+            <li><strong>Secrets :</strong> mots de passe et URL de webhook stockés dans des fichiers séparés aux droits restreints, jamais dans les fichiers de configuration.</li>
+            <li>
+              <strong>Reverse proxy :</strong> Nginx Proxy Manager publie chaque service sous un nom interne (ex. <code>jellyfin.lan</code>), avec WebSockets pour les applications temps réel.
+              <figure class="shot">
+                <div class="shot-frame" data-file="homelab-npm.png">
+                  <img src="images/homelab/homelab-npm.png" alt="Liste des proxys dans Nginx Proxy Manager avec SSL actif">
+                </div>
+                <figcaption>Liste des proxys Nginx Proxy Manager, SSL actif.</figcaption>
+              </figure>
+            </li>
+            <li>
+              <strong>PKI interne :</strong> création d'une autorité de certification avec OpenSSL, émission d'un certificat serveur listant tous les noms dans le champ SAN, import de l'AC dans le magasin de confiance des navigateurs, HTTPS forcé sur tous les services.
+              <figure class="shot">
+                <div class="shot-frame" data-file="homelab-certificat.png">
+                  <img src="images/homelab/homelab-certificat.png" alt="Cadenas du navigateur et détail du certificat émis par l'autorité de certification interne">
+                </div>
+                <figcaption>Cadenas et détail du certificat émis par l'AC interne.</figcaption>
+              </figure>
+            </li>
+            <li>
+              <strong>Supervision :</strong> sondes HTTP et DNS sur chaque service, notifications Discord de panne et de rétablissement, alertes de mises à jour avec Diun.
+              <div class="shot-pair">
+                <figure class="shot">
+                  <div class="shot-frame" data-file="homelab-uptime-kuma.png">
+                    <img src="images/homelab/homelab-uptime-kuma.png" alt="Sondes Uptime Kuma toutes au vert">
+                  </div>
+                  <figcaption>Sondes Uptime Kuma au vert.</figcaption>
+                </figure>
+                <figure class="shot">
+                  <div class="shot-frame" data-file="homelab-alerte-discord.png">
+                    <img src="images/homelab/homelab-alerte-discord.png" alt="Alertes Discord de panne puis de rétablissement d'un service">
+                  </div>
+                  <figcaption>Alertes Discord de panne et de rétablissement.</figcaption>
+                </figure>
+              </div>
+            </li>
+            <li>
+              <strong>Durcissement :</strong> authentification SSH par clé ed25519 uniquement, connexion root interdite, mises à jour de sécurité automatiques (unattended-upgrades), Fail2ban sur SSH.
+              <figure class="shot">
+                <div class="shot-frame" data-file="homelab-ssh.png">
+                  <img src="images/homelab/homelab-ssh.png" alt="Connexion SSH par mot de passe refusée (publickey)">
+                </div>
+                <figcaption>Refus de connexion par mot de passe (publickey).</figcaption>
+              </figure>
+            </li>
+            <li>
+              <strong>Accès distant :</strong> Tailscale sur le serveur, le smartphone et le PC fixe ; publication d'Immich en HTTPS avec un certificat Let's Encrypt via Tailscale Serve ; sauvegarde des photos du smartphone fonctionnelle en 4G/5G.
+              <figure class="shot">
+                <div class="shot-frame" data-file="homelab-tailscale.png">
+                  <img src="images/homelab/homelab-tailscale.png" alt="Console Tailscale avec les appareils connectés, noms masqués">
+                </div>
+                <figcaption>Console Tailscale (noms masqués).</figcaption>
+              </figure>
+            </li>
+            <li>
+              <strong>Documentation :</strong> 15 pages dans un Wiki.js auto-hébergé (procédures, choix techniques, journal des incidents).
+              <figure class="shot">
+                <div class="shot-frame" data-file="homelab-wiki.png">
+                  <img src="images/homelab/homelab-wiki.png" alt="Arborescence de la documentation dans Wiki.js">
+                </div>
+                <figcaption>Arborescence de la documentation dans Wiki.js.</figcaption>
+              </figure>
+            </li>
+          </ol>
+        </section>
+
+        <section class="case-section" id="problemes-rencontres-et-solutions">
+          <h2>Problèmes rencontrés et solutions</h2>
+          <div class="incidents">
+            <div class="incident">
+              <h3>Les conteneurs ne résolvaient plus aucun nom (alertes Discord impossibles)</h3>
+              <p><strong>Diagnostic :</strong> fichier <code>resolv.conf</code> vidé par le client DHCP lors du passage en IP fixe.</p>
+              <p><strong>Solution :</strong> configuration DNS statique puis redémarrage du service Docker.</p>
+            </div>
+            <div class="incident">
+              <h3>Les noms internes ne résolvaient pas malgré le DNS configuré</h3>
+              <p><strong>Diagnostic :</strong> le DNS IPv6 annoncé par la box était prioritaire ; le navigateur utilisait en plus le DNS via HTTPS.</p>
+              <p><strong>Solution :</strong> résolution par fichier hosts, désactivation du DNS via HTTPS dans le navigateur.</p>
+            </div>
+            <div class="incident">
+              <h3>Connexion à Portainer refusée (401) derrière le reverse proxy</h3>
+              <p><strong>Diagnostic :</strong> cookie de session « Secure » non conservé sur une connexion HTTP.</p>
+              <p><strong>Solution :</strong> passage de tous les services en HTTPS avec la PKI interne.</p>
+            </div>
+            <div class="incident">
+              <h3>Aucune alerte reçue lors d'une panne simulée</h3>
+              <p><strong>Diagnostic :</strong> logs sans aucune tentative d'envoi : notification non associée aux sondes.</p>
+              <p><strong>Solution :</strong> association de la notification à chaque sonde, test par arrêt d'un conteneur.</p>
+            </div>
+            <div class="incident">
+              <h3>Accès par nom de domaine impossible pour le smartphone</h3>
+              <p><strong>Diagnostic :</strong> réseau NAT de la VM non joignable depuis l'extérieur du PC.</p>
+              <p><strong>Solution :</strong> VPN Tailscale, sans ouverture de port sur la box.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="case-section" id="competences-bts-sio-mobilisees">
+          <h2>Compétences BTS SIO mobilisées</h2>
+          <div class="skills-blocks">
+            <div>
+              <h3>Bloc 1</h3>
+              <dl>
+                <div><dt>Mettre à disposition des utilisateurs un service informatique</dt><dd>Déploiement et publication de 10 services, tableau de bord d'accès.</dd></div>
+                <div><dt>Répondre aux incidents</dt><dd>Diagnostic par couches (DNS, réseau, service, navigateur), journal des incidents.</dd></div>
+                <div><dt>Organiser son développement professionnel</dt><dd>Projet personnel, documentation dans un wiki, veille sur les mises à jour.</dd></div>
+              </dl>
+            </div>
+            <div>
+              <h3>Bloc 2 SISR</h3>
+              <dl>
+                <div><dt>Installer, tester et déployer une solution d'infrastructure</dt><dd>VM Debian, Docker, reverse proxy, DNS, VPN.</dd></div>
+                <div><dt>Exploiter, dépanner et superviser</dt><dd>Uptime Kuma, Diun, alertes Discord, résolution des pannes.</dd></div>
+              </dl>
+            </div>
+            <div>
+              <h3>Bloc 3</h3>
+              <dl>
+                <div><dt>Sécuriser les équipements et les usages</dt><dd>SSH par clé, Fail2ban, mises à jour automatiques, secrets isolés.</dd></div>
+                <div><dt>Garantir la disponibilité, l'intégrité et la confidentialité</dt><dd>HTTPS partout (PKI interne), VPN chiffré, aucun port exposé, supervision.</dd></div>
+              </dl>
+            </div>
+          </div>
+        </section>
+
+        <section class="case-section" id="bilan-et-perspectives">
+          <h2>Bilan et perspectives</h2>
+          <p><strong>Bilan :</strong> une infrastructure complète et cohérente, comparable en miniature à celle d'une entreprise : services conteneurisés, point d'entrée unique en HTTPS, PKI interne, supervision, durcissement et accès distant chiffré. Le projet m'a surtout appris à diagnostiquer méthodiquement, couche par couche, et à documenter au fil de l'eau.</p>
+          <p><strong>Limites :</strong> le labo dépend de mon PC portable (indisponible lorsqu'il est éteint) et ne dispose pas encore de sauvegarde externe.</p>
+          <h3 class="case-subtitle">Perspectives</h3>
+          <ul class="case-list">
+            <li>Sauvegardes automatisées selon la règle 3-2-1 sur un SSD externe.</li>
+            <li>Migration vers un mini-serveur allumé en permanence, avec DNS redondant.</li>
+            <li>Extension du labo : double contrôleur de domaine Active Directory, serveurs de fichiers et postes clients.</li>
+          </ul>
+        </section>
+      </article>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p class="footer-bottom">&copy; <span id="year"></span> Alexis Beaufils · BTS SIO SISR · <a href="index.html#contact">Me contacter</a></p>
+  </footer>
+
+  <button id="scrollTopBtn" type="button" title="Retour en haut" aria-label="Retour en haut">&#8593;</button>
+
+  <script src="script.js" defer></script>
+</body>
+</html>

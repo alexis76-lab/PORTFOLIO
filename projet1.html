@@ -5,144 +5,130 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Situation professionnelle E6 BTS SIO SISR : configuration d'un Active Directory sous Windows Server.">
   <title>Projet E6 - Configuration Active Directory</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#0c0c0d" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#fafafa" media="(prefers-color-scheme: light)">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:site_name" content="Alexis Beaufils - Portfolio BTS SIO SISR">
+  <meta property="og:title" content="Projet E6 - Configuration Active Directory">
+  <meta property="og:description" content="Situation professionnelle E6 BTS SIO SISR : configuration d'un Active Directory sous Windows Server.">
+  <meta name="twitter:card" content="summary">
+  <meta name="color-scheme" content="dark light">
+  <script>
+    (function () {
+      var theme = null;
+      try { theme = localStorage.getItem("theme"); } catch (error) {}
+      if (theme !== "light" && theme !== "dark") {
+        theme = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+      }
+      document.documentElement.dataset.theme = theme;
+    })();
+  </script>
   <link rel="stylesheet" href="style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <header class="project-header">
+  <header>
     <nav>
-      <ul>
-        <li><a href="index.html#projets">&#8592; Retour</a></li>
-      </ul>
-      <button class="theme-toggle" type="button" aria-label="Changer de thème"></button>
+      <a href="index.html" class="brand" aria-label="Alexis Beaufils - retour à l'accueil">
+        <span class="brand-mark">AB</span>
+        <span class="brand-name">Alexis Beaufils</span>
+      </a>
+      <div class="nav-actions">
+        <a href="index.html#projets" class="case-back">&#8592; Tous les projets</a>
+        <button class="theme-toggle" type="button" aria-label="Changer de thème"></button>
+      </div>
     </nav>
   </header>
 
-  <main class="project-page">
-    <section class="project-hero fade-in">
-      <img src="salle-serveur-moderne-securisee.png" alt="Projet Active Directory" class="project-image parallax">
-      <h1>Situation E6 : Configuration d'un Active Directory</h1>
-      <p class="subtitle">Mise en place d'un contrôleur de domaine Windows Server avec configuration réseau, installation du rôle AD DS, promotion du serveur et vérifications de fonctionnement.</p>
+  <main class="case">
+    <section class="case-hero fade-in">
+      <div class="case-badges">
+        <span class="case-badge e6">Épreuve E6</span>
+        <span class="case-badge">Projet d'école</span>
+      </div>
+      <h1>Configuration d'un Active Directory</h1>
+      <p class="case-lead">Mise en place d'un contrôleur de domaine Windows Server avec configuration réseau, installation du rôle AD DS, promotion du serveur et vérifications de fonctionnement.</p>
+      <img src="salle-serveur-moderne-securisee.jpg" alt="Projet Active Directory" class="project-image case-banner">
     </section>
 
-    <section class="project-summary fade-in">
-      <div class="project-panel">
-        <h2>Contexte</h2>
-        <p>Ce projet a été réalisé dans le cadre d'un TP de formation en BTS SIO option SISR. L'objectif était de comprendre le rôle d'Active Directory dans une infrastructure et de mettre en place un service d'annuaire exploitable.</p>
-        <p>Cette situation professionnelle est utilisée pour l'épreuve E6, car elle montre une démarche complète : préparation, installation, configuration, validation et documentation.</p>
-      </div>
-      <aside class="project-panel">
+    <div class="case-layout">
+      <aside class="case-facts" aria-label="Le projet en bref">
+        <h2>En bref</h2>
+        <dl>
+          <div><dt>Type</dt><dd>Projet d'école réalisé en groupe</dd></div>
+          <div><dt>Période</dt><dd>Septembre 2025</dd></div>
+          <div><dt>Durée</dt><dd>4 heures de réalisation et de validation</dd></div>
+        </dl>
         <h3>Environnement</h3>
-        <div class="project-tags">
-          <span class="project-tag">Windows Server</span>
-          <span class="project-tag">Active Directory</span>
-          <span class="project-tag">AD DS</span>
-          <span class="project-tag">Épreuve E6</span>
+        <div class="case-tags">
+          <span>Windows Server</span>
+          <span>Active Directory</span>
+          <span>AD DS</span>
         </div>
       </aside>
-    </section>
 
-    <section class="project-highlights fade-in">
-      <article class="highlight-card">
-        <strong>Objectif</strong>
-        <p>Installer un annuaire Active Directory fonctionnel pour centraliser l'authentification et l'administration du domaine.</p>
-      </article>
-      <article class="highlight-card">
-        <strong>Mon rôle</strong>
-        <p>Configurer le serveur, installer le rôle AD DS, promouvoir la machine et contrôler le bon état du service.</p>
-      </article>
-      <article class="highlight-card">
-        <strong>Résultat</strong>
-        <p>Un contrôleur de domaine opérationnel, prêt à accueillir des comptes, groupes et postes clients.</p>
-      </article>
-    </section>
+      <article class="case-main">
+        <section class="case-section fade-in">
+          <h2>En résumé</h2>
+          <p>Ce projet a été réalisé dans le cadre d'un TP de formation en BTS SIO option SISR. L'objectif était de comprendre le rôle d'Active Directory dans une infrastructure et de mettre en place un service d'annuaire exploitable.</p>
+          <div class="case-pillars">
+            <div>
+              <h3>Objectif</h3>
+              <p>Installer un annuaire Active Directory fonctionnel pour centraliser l'authentification et l'administration du domaine.</p>
+            </div>
+            <div>
+              <h3>Mon rôle</h3>
+              <p>Configurer le serveur, installer le rôle AD DS, promouvoir la machine et contrôler le bon état du service.</p>
+            </div>
+            <div>
+              <h3>Résultat</h3>
+              <p>Un contrôleur de domaine opérationnel, prêt à accueillir des comptes, groupes et postes clients.</p>
+            </div>
+          </div>
+        </section>
 
-    <section class="project-highlights fade-in">
-      <article class="highlight-card">
-        <strong>Type</strong>
-        <p>Projet d'école réalisé en groupe.</p>
-      </article>
-      <article class="highlight-card">
-        <strong>Durée</strong>
-        <p>4 heures de travail sur la réalisation et la validation.</p>
-      </article>
-      <article class="highlight-card">
-        <strong>Période</strong>
-        <p>septembre 2025.</p>
-      </article>
-    </section>
-
-    <section class="project-section project-section-card fade-in">
-      <h2>Déroulement du TP</h2>
-      <div class="project-grid">
-        <div>
-          <ul>
-            <li><strong>Analyse :</strong> identification du rôle d'Active Directory Domain Services dans le système d'information.</li>
-            <li><strong>Préparation :</strong> vérification du serveur et configuration d'une adresse IP statique.</li>
-            <li><strong>Installation :</strong> ajout du rôle AD DS depuis Windows Server.</li>
+        <section class="case-section fade-in">
+          <h2>Points clés</h2>
+          <ul class="key-points">
+            <li><strong>Analyse</strong> du rôle d'AD DS dans le système d'information</li>
+            <li><strong>Préparation</strong> du serveur et adresse IP statique</li>
+            <li><strong>Installation</strong> du rôle AD DS</li>
+            <li><strong>Promotion</strong> du serveur en contrôleur de domaine</li>
+            <li><strong>Validation</strong> du domaine et du service DNS</li>
+            <li><strong>Documentation</strong> : TP et fiche E6 conservés comme preuves</li>
           </ul>
-        </div>
-        <div>
-          <ul>
-            <li><strong>Promotion :</strong> transformation du serveur en contrôleur de domaine.</li>
-            <li><strong>Validation :</strong> vérification du domaine, du service DNS et de l'état général de l'installation.</li>
-            <li><strong>Documentation :</strong> conservation du TP et de la fiche descriptive E6 comme preuves.</li>
-          </ul>
-        </div>
-      </div>
-    </section>
+        </section>
 
-    <section class="project-section project-section-card fade-in">
-      <h2>Difficultés et solutions</h2>
-      <ul>
-        <li><strong>Adressage réseau :</strong> l'adresse IP devait être stable pour éviter les erreurs de résolution et de promotion du domaine.</li>
-        <li><strong>Ordre des étapes :</strong> la configuration réseau devait être validée avant l'installation du rôle AD DS.</li>
-        <li><strong>Contrôle final :</strong> les vérifications ont permis de confirmer que le serveur était bien contrôleur de domaine.</li>
-      </ul>
-    </section>
-
-    <section class="project-section project-section-card fade-in">
-      <h2>Compétences BTS SIO mobilisées</h2>
-      <div class="competence-links">
-        <span>Gérer le patrimoine informatique</span>
-        <span>Mettre à disposition un service informatique</span>
-        <span>Travailler en mode projet</span>
-        <span>Organiser son développement professionnel</span>
-      </div>
-      <ul>
-        <li>Installer et configurer un service système répondant à un besoin technique.</li>
-        <li>Administrer un environnement serveur dans un cadre de mise en pratique.</li>
-        <li>Documenter une solution et vérifier son bon fonctionnement.</li>
-      </ul>
-    </section>
-
-    <section class="project-section project-section-card fade-in">
-      <h2>Documents associés</h2>
-      <div class="project-documents">
-        <article class="document-card">
-          <strong>Fiche descriptive E6</strong>
-          <p>Fiche de situation professionnelle SISR n°1 pour l'épreuve E6.</p>
-          <a href="Fiche descriptive SISR n°2 – E6 – Session 2026.pdf" class="btn" target="_blank" rel="noopener noreferrer">Ouvrir la fiche PDF</a>
-        </article>
-        <article class="document-card">
-          <strong>TP Configuration Active Directory</strong>
-          <p>Document du TP dédié à la configuration d'un Active Directory.</p>
-          <a href="tp-active-directory.pdf" class="btn secondary" target="_blank" rel="noopener noreferrer">Ouvrir le TP PDF</a>
-        </article>
-      </div>
-    </section>
-
-    <div class="project-buttons fade-in">
-      <a href="index.html#projets" class="btn">&#8592; Retour au portfolio</a>
+        <section class="case-section fade-in">
+          <h2>Pour aller plus loin</h2>
+          <p class="deep-links-note">Chaque lien s'ouvre dans un nouvel onglet.</p>
+          <div class="deep-links">
+            <a href="fiche-e6-sisr-2-active-directory.pdf" class="is-pdf" target="_blank" rel="noopener noreferrer"><strong>Fiche descriptive E6 n°2</strong><span>Document officiel de la situation</span></a>
+            <a href="tp-active-directory.pdf" class="is-pdf" target="_blank" rel="noopener noreferrer"><strong>TP Configuration Active Directory</strong><span>Le TP complet</span></a>
+            <a href="projet1-detail.html#deroulement-du-tp" target="_blank" rel="noopener"><strong>Déroulement détaillé</strong><span>Les 6 étapes du TP</span></a>
+            <a href="projet1-detail.html#difficultes-et-solutions" target="_blank" rel="noopener"><strong>Difficultés et solutions</strong><span>Adressage, ordre des étapes, contrôle final</span></a>
+            <a href="projet1-detail.html#competences-bts-sio-mobilisees" target="_blank" rel="noopener"><strong>Compétences BTS SIO</strong><span>Compétences du référentiel mobilisées</span></a>
+          </div>
+        </section>
+      </article>
     </div>
+
+    <nav class="case-pager" aria-label="Autres projets">
+      <a href="projet2.html" class="case-pager-next">
+        <span>Projet suivant &#8594;</span>
+        <strong>Installation GLPI sur Linux</strong>
+      </a>
+    </nav>
   </main>
 
-  <footer>
-    <p>&copy; <span id="year"></span> Alexis Beaufils - BTS SIO</p>
+  <footer class="site-footer">
+    <p class="footer-bottom">&copy; <span id="year"></span> Alexis Beaufils · BTS SIO SISR · <a href="index.html#contact">Me contacter</a></p>
   </footer>
 
-  <button id="scrollTopBtn" title="Retour en haut">&#8593;</button>
+  <button id="scrollTopBtn" type="button" title="Retour en haut" aria-label="Retour en haut">&#8593;</button>
 
   <script src="script.js" defer></script>
 </body>

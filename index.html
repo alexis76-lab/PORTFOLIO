@@ -4,7 +4,27 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Portfolio BTS SIO SISR d'Alexis Beaufils : projets, veille technologique et parcours.">
-  <title>Portfolio - BTS SIO</title>
+  <title>Alexis Beaufils - Portfolio BTS SIO SISR</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#0c0c0d" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#fafafa" media="(prefers-color-scheme: light)">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:site_name" content="Alexis Beaufils - Portfolio BTS SIO SISR">
+  <meta property="og:title" content="Alexis Beaufils - Portfolio BTS SIO SISR">
+  <meta property="og:description" content="Portfolio BTS SIO SISR d'Alexis Beaufils : projets, veille technologique et parcours.">
+  <meta name="twitter:card" content="summary">
+  <meta name="color-scheme" content="dark light">
+  <script>
+    (function () {
+      var theme = null;
+      try { theme = localStorage.getItem("theme"); } catch (error) {}
+      if (theme !== "light" && theme !== "dark") {
+        theme = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+      }
+      document.documentElement.dataset.theme = theme;
+    })();
+  </script>
   <link rel="stylesheet" href="style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -14,29 +34,26 @@
 
 <header>
   <nav>
+    <a href="#home" class="brand" aria-label="Alexis Beaufils - retour à l'accueil">
+      <span class="brand-mark">AB</span>
+      <span class="brand-name">Alexis Beaufils</span>
+    </a>
+
     <ul>
-      <li><a href="#home">Accueil</a></li>
-      <li><a href="#bts">BTS SIO</a></li>
       <li><a href="#competences">Compétences</a></li>
-      <li><a href="#cv">CV</a></li>
-      <li><a href="#certifs">Certifications</a></li>
-      <li><a href="#e6">E6</a></li>
+      <li><a href="#cv">Parcours</a></li>
       <li><a href="#projets">Projets</a></li>
       <li><a href="#veille">Veille</a></li>
       <li><a href="#tableau">Tableau</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
 
-    <button class="menu-btn" type="button" aria-label="Ouvrir le menu" aria-expanded="false">&#9776;</button>
-
     <div class="nav-actions">
       <button class="theme-toggle" type="button" aria-label="Changer de thème"></button>
       <a href="https://www.linkedin.com/in/alexis-beaufils-20471826a/" target="_blank" rel="noopener noreferrer" class="social-btn linkedin" title="LinkedIn" aria-label="LinkedIn">
         <i class="fa-brands fa-linkedin-in"></i>
       </a>
-      <a href="https://wa.me/33601746550" target="_blank" rel="noopener noreferrer" class="social-btn whatsapp" title="WhatsApp" aria-label="WhatsApp">
-        <i class="fa-brands fa-whatsapp"></i>
-      </a>
+      <button class="menu-btn" type="button" aria-label="Ouvrir le menu" aria-expanded="false">&#9776;</button>
     </div>
   </nav>
 </header>
@@ -44,66 +61,42 @@
 <main>
   <section id="home" class="hero fade-in section-shell">
     <div class="content">
-      <p class="section-kicker">Portfolio SISR</p>
-      <p class="hero-intro">Portfolio professionnel BTS SIO option SISR</p>
-      <h1><span class="hero-title-line">Bonjour, je suis <span class="typed-text" data-words="Alexis Beaufils"></span></span></h1>
-      <p>Étudiant en BTS SIO option <strong>SISR</strong>, passionné par l'administration système, le réseau et la cybersécurité.</p>
-      <p>Mon objectif est de construire des infrastructures fiables, sécurisées et bien documentées, avec une approche concrète et orientée terrain.</p>
-      <p>Après mon BTS, je souhaite poursuivre mes études en <strong>bachelor administrateur systèmes et réseaux</strong>, en alternance, afin de continuer à progresser sur l'administration d'infrastructures, le support avancé et la sécurisation des systèmes d'information.</p>
-
-      <div class="hero-highlights">
-        <span class="hero-badge">Étudiant</span>
-        <span class="hero-badge">Administration système réseau</span>
-        <span class="hero-badge">Cybersécurité</span>
-      </div>
-
-      <div class="hero-stats">
-        <div class="hero-stat">
-          <strong>7</strong>
-          <span>projets présentés</span>
-        </div>
-        <div class="hero-stat">
-          <strong>2024-2026</strong>
-          <span>parcours BTS SIO</span>
-        </div>
-      </div>
+      <p class="hero-intro">BTS SIO option SISR · Pôle BTS Alternance de Caen</p>
+      <h1>Alexis Beaufils</h1>
+      <p class="hero-role">Administration systèmes, réseaux et cybersécurité</p>
+      <p>Étudiant en alternance, je construis et maintiens des infrastructures fiables, sécurisées et bien documentées, avec une approche concrète et orientée terrain.</p>
+      <p class="hero-goal"><strong>Objectif :</strong> poursuivre en bachelor administrateur systèmes et réseaux, en alternance.</p>
 
       <div class="hero-cta">
         <a href="#projets" class="btn">Voir mes projets</a>
-        <a href="#competences" class="btn secondary">Voir mes compétences</a>
+        <a href="alexis-beaufils-cv-2026.pdf" class="btn secondary" download>Télécharger mon CV</a>
       </div>
     </div>
     <div class="photo">
-      <img src="moi-ameliore.png" alt="Photo de profil d'Alexis Beaufils" class="parallax">
+      <img src="moi-ameliore.png" alt="Photo de profil d'Alexis Beaufils">
     </div>
-  </section>
 
-  <section id="bts" class="fade-in section-shell">
-    <p class="section-kicker">Formation</p>
-    <h2>BTS SIO</h2>
-    <p class="section-intro">Le BTS Services Informatiques aux Organisations forme aux métiers de l'informatique autour des infrastructures, du support, du développement et de la sécurisation des services numériques.</p>
-    <div class="cards">
-      <div class="card">
-        <h3>SIO</h3>
-        <p>Une formation professionnalisante centrée sur les besoins informatiques des organisations et la mise en pratique de situations professionnelles.</p>
-      </div>
-      <div class="card">
-        <h3>SISR</h3>
-        <p>Solutions d'Infrastructure, Systèmes et Réseaux. Cette option est orientée administration des serveurs, gestion réseau, support, maintenance et sécurisation de l'infrastructure.</p>
-      </div>
-      <div class="card">
-        <h3>SLAM</h3>
-        <p>Solutions Logicielles et Applications Métiers. Cette spécialité est orientée vers le développement d'applications, les bases de données, le web et la cybersécurité applicative.</p>
-      </div>
-      <div class="card">
-        <h3>Mon choix</h3>
-        <p>Je suis en SISR, car je souhaite évoluer dans l'administration système et réseau avec une forte sensibilité à la cybersécurité.</p>
-      </div>
-    </div>
+    <ul class="hero-stats" aria-label="Chiffres clés">
+      <li class="hero-stat">
+        <strong data-count="projects">-</strong>
+        <span>projets présentés</span>
+      </li>
+      <li class="hero-stat">
+        <strong>~490</strong>
+        <span>tickets de support traités</span>
+      </li>
+      <li class="hero-stat">
+        <strong>2</strong>
+        <span>situations pour l'épreuve E6</span>
+      </li>
+      <li class="hero-stat">
+        <strong>3</strong>
+        <span>certifications</span>
+      </li>
+    </ul>
   </section>
 
   <section id="competences" class="fade-in section-shell">
-    <p class="section-kicker">Compétences</p>
     <h2>Compétences techniques</h2>
     <p class="section-intro">Cette section donne une lecture rapide des technologies et domaines sur lesquels je travaille dans mon parcours BTS SIO SISR.</p>
     <div class="skills-grid">
@@ -155,10 +148,8 @@
   </section>
 
   <section id="cv" class="fade-in section-shell">
-    <p class="section-kicker">Parcours</p>
     <h2>CV / Parcours</h2>
     <div class="cv-container">
-      <a href="Alexis_BEAUFILS_CV2026.pdf" class="btn glass" download>Télécharger le CV</a>
       <div class="timeline">
         <div class="timeline-column">
           <h3>Écoles / Formations</h3>
@@ -182,7 +173,6 @@
   </section>
 
   <section id="certifs" class="fade-in section-shell">
-    <p class="section-kicker">Validation</p>
     <h2>Certifications</h2>
     <div class="cards">
       <div class="card">
@@ -200,68 +190,50 @@
     </div>
   </section>
 
-  <section id="e6" class="fade-in section-shell">
-    <p class="section-kicker">Examen BTS SIO</p>
-    <h2>Épreuve E6 - Situations professionnelles</h2>
-    <p class="section-intro">Cette partie regroupe mes deux situations professionnelles principales pour l'épreuve E6 du BTS SIO option SISR. Chaque situation présente le contexte, les étapes réalisées, les compétences mobilisées et les documents associés.</p>
-    <div class="e6-overview">
-      <article class="e6-card">
-        <span class="e6-number">Situation 1</span>
+  <section id="projets" class="fade-in section-shell">
+    <h2>Projets et expériences</h2>
+    <p class="section-intro">Une sélection de projets représentatifs de mon parcours en administration système, support, infrastructure et cybersécurité. Les projets marqués <span class="e6-badge">Épreuve E6</span> sont ceux présentés à l'oral.</p>
+    <div class="projects-container">
+      <div class="project-card is-e6 fade-in">
+        <span class="e6-badge">Épreuve E6</span>
+        <img src="salle-serveur-moderne-securisee.jpg" alt="Projet Active Directory" class="project-thumb">
+        <div class="project-meta">
+          <span class="project-chip">Windows Server</span>
+          <span class="project-chip">AD DS</span>
+        </div>
         <h3>Configuration Active Directory</h3>
         <p>Mise en place d'un contrôleur de domaine Windows Server avec AD DS, configuration réseau, promotion du serveur et vérifications finales.</p>
-        <div class="competence-links">
-          <span>Gérer le patrimoine informatique</span>
-          <span>Mettre à disposition un service</span>
-          <span>Travailler en mode projet</span>
+        <a href="projet1.html" class="btn">Voir le projet<span class="btn-arrow" aria-hidden="true">&#8594;</span></a>
+      </div>
+
+      <div class="project-card is-e6 fade-in">
+        <span class="e6-badge">Épreuve E6</span>
+        <img src="station-travail-glpi-moderne.jpg" alt="Projet GLPI sur Linux" class="project-thumb">
+        <div class="project-meta">
+          <span class="project-chip">Linux</span>
+          <span class="project-chip">GLPI</span>
         </div>
-        <a href="projet1.html" class="btn">Voir la situation</a>
-      </article>
-      <article class="e6-card">
-        <span class="e6-number">Situation 2</span>
         <h3>Installation GLPI sur Linux</h3>
         <p>Déploiement d'une solution de ticketing et de gestion de parc, avec base de données, configuration initiale et validation de l'interface.</p>
-        <div class="competence-links">
-          <span>Répondre aux incidents</span>
-          <span>Mettre à disposition un service</span>
-          <span>Gérer le patrimoine informatique</span>
-        </div>
-        <a href="projet2.html" class="btn">Voir la situation</a>
-      </article>
-    </div>
-  </section>
-
-  <section id="projets" class="fade-in section-shell">
-    <p class="section-kicker">Réalisations</p>
-    <h2>Projets et expériences</h2>
-    <p class="section-intro">Une sélection de projets et d'expériences représentatifs de mon parcours en administration système, support, infrastructure et cybersécurité.</p>
-    <h3 class="projects-group-title">Projets complémentaires et expériences</h3>
-    <div class="cards projects-container">
-      <div class="project-card fade-in" style="--delay:0.3s">
-        <img src="protection-avancee-comptes-utilisateurs.png" alt="Projet politique de mots de passe" class="project-thumb">
-        <div class="project-meta">
-          <span class="project-chip">Active Directory</span>
-          <span class="project-chip">Specops</span>
-          <span class="project-chip">Sécurité</span>
-        </div>
-        <h3>Politique de mots de passe</h3>
-        <p>Durcissement des mots de passe Active Directory avec Specops Password Policy.</p>
-        <a href="projet3.html" class="btn">Voir le projet</a>
+        <a href="projet2.html" class="btn">Voir le projet<span class="btn-arrow" aria-hidden="true">&#8594;</span></a>
       </div>
 
-      <div class="project-card fade-in" style="--delay:0.4s">
-        <img src="mise-a-jour-salle-serveur.png" alt="Projet mise à jour firmware Huawei" class="project-thumb">
-        <div class="project-meta">
-          <span class="project-chip">Projet en entreprise</span>
-          <span class="project-chip">Huawei</span>
-          <span class="project-chip">Maintenance</span>
+      <div class="project-card fade-in">
+        <div class="shot-frame project-thumb" data-file="homelab-dashboard.png">
+          <img src="images/homelab/homelab-dashboard.png" alt="Tableau de bord Homepage du homelab">
         </div>
-        <h3>Firmware Huawei</h3>
-        <p>Mise à jour firmware de switchs Huawei avec redémarrages planifiés hors production.</p>
-        <a href="projet4.html" class="btn">Voir le projet</a>
+        <div class="project-meta">
+          <span class="project-chip">Projet personnel</span>
+          <span class="project-chip">Docker</span>
+          <span class="project-chip">Debian</span>
+        </div>
+        <h3>Homelab auto-hébergé</h3>
+        <p>Infrastructure de services sous Docker sur une VM Debian : reverse proxy HTTPS, PKI interne, supervision, durcissement et accès distant via VPN.</p>
+        <a href="homelab.html" class="btn">Voir le projet<span class="btn-arrow" aria-hidden="true">&#8594;</span></a>
       </div>
 
-      <div class="project-card fade-in" style="--delay:0.5s">
-        <img src="Technicien IT dans un environnement moderne.png" alt="Projet gestion de tickets" class="project-thumb">
+      <div class="project-card fade-in">
+        <img src="technicien-it-environnement-moderne.jpg" alt="Projet gestion de tickets" class="project-thumb">
         <div class="project-meta">
           <span class="project-chip">Support utilisateurs</span>
           <span class="project-chip">GLPI</span>
@@ -269,69 +241,58 @@
         </div>
         <h3>Support utilisateurs et tickets</h3>
         <p>Traitement d'incidents et demandes utilisateurs avec suivi des interventions dans GLPI.</p>
-        <a href="projet5.html" class="btn">Voir l'activité</a>
-      </div>
-
-      <div class="project-card fade-in" style="--delay:0.6s">
-        <img src="centre-operations-securite-moderne.png" alt="Projet SIEM Wazuh" class="project-thumb">
-        <div class="project-meta">
-          <span class="project-chip">Projet en entreprise</span>
-          <span class="project-chip">Wazuh</span>
-          <span class="project-chip">Logs</span>
-        </div>
-        <h3>SIEM avec Wazuh</h3>
-        <p>Connexion des agents, vérification des remontées de logs et analyse des événements.</p>
-        <a href="projet6.html" class="btn">Voir le projet</a>
-      </div>
-
-      <div class="project-card fade-in" style="--delay:0.7s">
-        <img src="salle-serveur-moderne-securisee.png" alt="Projet Docker Compose Homelab" class="project-thumb">
-        <div class="project-meta">
-          <span class="project-chip">Projet d'école</span>
-          <span class="project-chip">Docker Compose</span>
-          <span class="project-chip">Homelab</span>
-        </div>
-        <h3>TP Docker Compose Homelab</h3>
-        <p>Création d'un homelab multiservice avec tableaux de bord, outils IT, sécurité et supervision.</p>
-        <a href="projet7.html" class="btn">Voir le projet</a>
+        <a href="projet5.html" class="btn">Voir l'activité<span class="btn-arrow" aria-hidden="true">&#8594;</span></a>
       </div>
     </div>
   </section>
 
   <section id="veille" class="fade-in section-shell">
-    <p class="section-kicker">Actualisation</p>
     <h2>Veille technologique</h2>
-    <p class="section-intro">Flux RSS agrégés automatiquement autour de la cybersécurité, de l'administration système, de l'infrastructure réseau et de l'IA appliquée au monde IT.</p>
-    <div class="veille-shell">
-      <div class="veille-topbar">
-        <div>
-          <p class="veille-caption">Derniers articles récents récupérés depuis des sources RSS orientées cyber, infra, système, réseau et IA.</p>
-          <p class="veille-cache">Dernière mise à jour : <span id="veille-last-updated">Chargement...</span></p>
-        </div>
-        <button id="veille-refresh" class="btn secondary veille-refresh" type="button">Actualiser</button>
-      </div>
+    <p class="section-intro">Ma veille porte sur la cybersécurité, les fuites de données, l'infrastructure (virtualisation, systèmes Microsoft et Linux) et la réglementation (ANSSI, NIS2). Pour la rendre régulière et exploitable, j'ai automatisé toute la chaîne, de la collecte des articles jusqu'à leur diffusion triée.</p>
 
-      <div class="veille-source-row" aria-label="Sources de veille">
-        <span class="veille-source-chip">Alertes de sécurité</span>
-        <span class="veille-source-chip">Cyber</span>
-        <span class="veille-source-chip">Infra et IA</span>
-      </div>
+    <ol class="veille-flow" aria-label="Fonctionnement de ma veille automatisée">
+      <li>
+        <span class="veille-tool">Make</span>
+        <strong>Planification</strong>
+        <span>Tous les jours à 8 h</span>
+      </li>
+      <li>
+        <span class="veille-tool">RSS</span>
+        <strong>Collecte</strong>
+        <span>9 flux, sources de niveau 1 à 3</span>
+      </li>
+      <li>
+        <span class="veille-tool">Make</span>
+        <strong>Filtre et regroupement</strong>
+        <span>Articles des dernières 24 h</span>
+      </li>
+      <li class="is-ai">
+        <span class="veille-tool">Google Gemini</span>
+        <strong>Analyse IA</strong>
+        <span>Tri, note, confiance, résumé</span>
+      </li>
+      <li>
+        <span class="veille-tool">Routeur Make</span>
+        <strong>Diffusion triée</strong>
+        <span>Vers 4 salons Discord</span>
+      </li>
+    </ol>
 
-      <div id="veille-status" class="veille-status" role="status">Chargement de la veille...</div>
-      <div id="veille-grid" class="veille-feed-grid" aria-live="polite"></div>
-
-      <div id="veille-pagination" class="veille-pagination" hidden>
-        <button id="veille-prev" class="veille-page-btn" type="button" aria-label="Articles précédents">&#8249;</button>
-        <span id="veille-page-info">1 / 1</span>
-        <button id="veille-next" class="veille-page-btn" type="button" aria-label="Articles suivants">&#8250;</button>
-      </div>
+    <div class="veille-channels">
+      <div class="veille-channel critique"><strong>#critique</strong><span>Importance 9-10</span></div>
+      <div class="veille-channel importante"><strong>#importante</strong><span>Importance 7-8</span></div>
+      <div class="veille-channel info"><strong>#info</strong><span>Importance 6 et moins</span></div>
+      <div class="veille-channel tutos"><strong>#tutos</strong><span>Tutos et tests</span></div>
     </div>
+    <p class="veille-bot">Publication sur Discord par le bot « Monsieur Veille »</p>
+
+    <a href="veille.html" class="btn veille-cta">Voir comment je fais ma veille <span aria-hidden="true">&#8594;</span></a>
   </section>
 
   <section id="tableau" class="fade-in section-shell">
-    <p class="section-kicker">Synthèse</p>
     <h2>Tableau de synthèse</h2>
     <p class="section-intro">Le tableau de synthèse reprend les compétences mobilisées, les situations professionnelles et les projets présentés dans le cadre du BTS SIO.</p>
+    <a href="tableau-synthese-bts.pdf" class="btn tableau-open" target="_blank" rel="noopener noreferrer">Ouvrir le tableau de synthèse (PDF) <span aria-hidden="true">&#8599;</span></a>
     <div class="tableau-preview">
       <object data="tableau-synthese-bts.pdf" type="application/pdf" width="100%" height="700">
         <p>Le tableau de synthèse ne peut pas être affiché ici. <a href="tableau-synthese-bts.pdf">Ouvrir le PDF</a>.</p>
@@ -340,7 +301,6 @@
   </section>
 
   <section id="contact" class="fade-in section-shell">
-    <p class="section-kicker">Contact</p>
     <h2>Contact</h2>
     <p class="section-intro">Vous pouvez me contacter par e-mail, WhatsApp ou via le formulaire ci-dessous.</p>
 
@@ -364,11 +324,37 @@
   </section>
 </main>
 
-<footer>
-  <p>&copy; <span id="year"></span> Alexis Beaufils - BTS SIO</p>
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-about">
+      <a href="#home" class="brand">
+        <span class="brand-mark">AB</span>
+        <span class="brand-name">Alexis Beaufils</span>
+      </a>
+      <p>Étudiant BTS SIO option SISR en alternance. À la recherche d'une alternance en bachelor administrateur systèmes et réseaux.</p>
+    </div>
+
+    <nav class="footer-links" aria-label="Plan du site">
+      <h3>Navigation</h3>
+      <a href="#competences">Compétences</a>
+      <a href="#cv">Parcours</a>
+      <a href="#projets">Projets</a>
+      <a href="#veille">Veille</a>
+      <a href="#tableau">Tableau de synthèse</a>
+    </nav>
+
+    <div class="footer-links">
+      <h3>Me contacter</h3>
+      <a href="mailto:alexis.beaufils76160@gmail.com"><i class="fa-solid fa-envelope"></i> Email</a>
+      <a href="https://www.linkedin.com/in/alexis-beaufils-20471826a/" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-linkedin-in"></i> LinkedIn</a>
+      <a href="https://wa.me/33601746550" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+      <a href="alexis-beaufils-cv-2026.pdf" download><i class="fa-solid fa-file-arrow-down"></i> CV (PDF)</a>
+    </div>
+  </div>
+  <p class="footer-bottom">&copy; <span id="year"></span> Alexis Beaufils · BTS SIO SISR</p>
 </footer>
 
-<button id="scrollTopBtn" title="Retour en haut">&#8593;</button>
+<button id="scrollTopBtn" type="button" title="Retour en haut" aria-label="Retour en haut">&#8593;</button>
 
 <script src="script.js" defer></script>
 </body>
