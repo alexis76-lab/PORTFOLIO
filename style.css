@@ -239,7 +239,7 @@ h2{font-size:2rem;margin-bottom:20px;}
 .hero-stats{
   grid-column:1 / -1;
   display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));
+  grid-template-columns:repeat(3,minmax(0,1fr));
   gap:14px;
 }
 .hero-stat{
@@ -358,31 +358,6 @@ h2{font-size:2rem;margin-bottom:20px;}
 .project-card:hover{
   transform: translateY(-6px);
   border-color: var(--accent);
-}
-.project-card.is-e6{border-color:rgba(var(--accent-rgb),0.55);}
-.e6-badge{
-  display:inline-flex;
-  align-items:center;
-  gap:5px;
-  padding:3px 8px;
-  border-radius:4px;
-  background:rgba(var(--accent-rgb),0.16);
-  color:var(--accent);
-  font-size:0.72rem;
-  font-weight:700;
-  letter-spacing:0.06em;
-  text-transform:uppercase;
-  white-space:nowrap;
-}
-.e6-badge::before,
-.case-badge.e6::before{content:"\2605";font-size:0.85em;}
-.project-card .e6-badge{
-  position:absolute;
-  top:28px;
-  left:28px;
-  z-index:1;
-  background:var(--surface-strong);
-  box-shadow:0 4px 12px rgba(0,0,0,0.25);
 }
 .project-card::after{
   content:"";
@@ -775,7 +750,6 @@ nav .case-back:hover{background:var(--accent);border-color:var(--accent);color:v
   letter-spacing:0.06em;
   text-transform:uppercase;
 }
-.case-badge.e6{background:rgba(var(--accent-rgb),0.16);color:var(--accent);}
 .case-hero h1{
   font-size:clamp(2rem, 4.5vw, 3rem);
   line-height:1.12;
@@ -1449,7 +1423,6 @@ nav .case-back:hover{background:var(--accent);border-color:var(--accent);color:v
 
 /* ===== RESPONSIVE ===== */
 @media(max-width:1024px){
-  .hero-stats{grid-template-columns:repeat(2,minmax(0,1fr));}
   .footer-inner{grid-template-columns:repeat(2,minmax(0,1fr));}
   .footer-about{grid-column:1 / -1;}
 }
@@ -1510,7 +1483,7 @@ nav .case-back:hover{background:var(--accent);border-color:var(--accent);color:v
   .case-facts dl{grid-template-columns:1fr;}
   .cards{grid-template-columns:1fr;}
   .hero img{width:170px;height:170px;}
-  .hero-stats{gap:10px;}
+  .hero-stats{grid-template-columns:1fr;gap:10px;}
   .hero-stat{padding:12px 14px;}
   .hero-stat strong{font-size:1.3rem;}
   .brand-name{display:none;}
