@@ -25,7 +25,7 @@
       document.documentElement.dataset.theme = theme;
     })();
   </script>
-  <link rel="stylesheet" href="style.css?v=2026-10-23b">
+  <link rel="stylesheet" href="style.css?v=2026-11-18">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -78,7 +78,7 @@
 
     <ul class="hero-stats" aria-label="Chiffres clés">
       <li class="hero-stat">
-        <strong data-count="projects">4</strong>
+        <strong data-count="projects">3</strong>
         <span>projets présentés</span>
       </li>
       <li class="hero-stat">
@@ -105,6 +105,9 @@
           <span class="skill-tag">Active Directory</span>
           <span class="skill-tag">GPO</span>
           <span class="skill-tag">DNS</span>
+          <span class="skill-tag">DHCP</span>
+          <span class="skill-tag">DFS</span>
+          <span class="skill-tag">FSRM</span>
         </div>
       </article>
       <article class="skill-panel">
@@ -191,25 +194,17 @@
     <p class="section-intro">Une sélection de projets représentatifs de mon parcours en administration système, support, infrastructure et cybersécurité.</p>
     <div class="projects-container">
       <div class="project-card fade-in">
-        <img src="salle-serveur-moderne-securisee.jpg" alt="Projet Active Directory" class="project-thumb">
-        <div class="project-meta">
-          <span class="project-chip">Windows Server</span>
-          <span class="project-chip">AD DS</span>
+        <div class="shot-frame project-thumb" data-file="iris-glpi-inventaire.png">
+          <img src="images/iris/iris-glpi-inventaire.png" alt="Inventaire GLPI des 6 machines de la maquette iris.local">
         </div>
-        <h3>Configuration Active Directory</h3>
-        <p>Mise en place d'un contrôleur de domaine Windows Server avec AD DS, configuration réseau, promotion du serveur et vérifications finales.</p>
-        <a href="projet1.html" class="btn">Voir le projet<span class="btn-arrow" aria-hidden="true">&#8594;</span></a>
-      </div>
-
-      <div class="project-card fade-in">
-        <img src="station-travail-glpi-moderne.jpg" alt="Projet GLPI sur Linux" class="project-thumb">
         <div class="project-meta">
-          <span class="project-chip">Linux</span>
+          <span class="project-chip">Projet d'école</span>
+          <span class="project-chip">Windows Server</span>
           <span class="project-chip">GLPI</span>
         </div>
-        <h3>Installation GLPI sur Linux</h3>
-        <p>Déploiement d'une solution de ticketing et de gestion de parc, avec base de données, configuration initiale et validation de l'interface.</p>
-        <a href="projet2.html" class="btn">Voir le projet<span class="btn-arrow" aria-hidden="true">&#8594;</span></a>
+        <h3>Maquette d'infrastructure iris.local</h3>
+        <p>Infrastructure Windows redondante sous VMware : deux contrôleurs de domaine (dont un en Server Core), deux serveurs de fichiers DFS, GPO et GLPI relié à l'annuaire.</p>
+        <a href="iris.html" class="btn">Voir le projet<span class="btn-arrow" aria-hidden="true">&#8594;</span></a>
       </div>
 
       <div class="project-card fade-in">
@@ -348,6 +343,6 @@
 
 <button id="scrollTopBtn" type="button" title="Retour en haut" aria-label="Retour en haut">&#8593;</button>
 
-<script src="script.js?v=2026-10-23b" defer></script>
+<script src="script.js?v=2026-11-18" defer></script>
 </body>
 </html>

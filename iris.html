@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Maquette d'infrastructure iris.local : Active Directory redondant sur deux contrôleurs dont un en Server Core, DHCP en basculement, DFS et FSRM sur deux serveurs de fichiers, GPO et GLPI relié à l'annuaire, sous VMware Workstation.">
+  <title>Projet - Maquette d'infrastructure iris.local</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#0c0c0d" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#fafafa" media="(prefers-color-scheme: light)">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:site_name" content="Alexis Beaufils - Portfolio BTS SIO SISR">
+  <meta property="og:title" content="Projet - Maquette d'infrastructure iris.local">
+  <meta property="og:description" content="Maquette d'infrastructure iris.local : Active Directory redondant sur deux contrôleurs dont un en Server Core, DHCP en basculement, DFS et FSRM sur deux serveurs de fichiers, GPO et GLPI relié à l'annuaire, sous VMware Workstation.">
+  <meta name="twitter:card" content="summary">
+  <meta name="color-scheme" content="dark light">
+  <script>
+    (function () {
+      var theme = null;
+      try { theme = localStorage.getItem("theme"); } catch (error) {}
+      if (theme !== "light" && theme !== "dark") {
+        theme = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+      }
+      document.documentElement.dataset.theme = theme;
+    })();
+  </script>
+  <link rel="stylesheet" href="style.css?v=2026-11-18">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="index.html" class="brand" aria-label="Alexis Beaufils - retour à l'accueil">
+        <span class="brand-mark">AB</span>
+        <span class="brand-name">Alexis Beaufils</span>
+      </a>
+      <div class="nav-actions">
+        <a href="index.html#projets" class="case-back">&#8592; Tous les projets</a>
+        <button class="theme-toggle" type="button" aria-label="Changer de thème"></button>
+      </div>
+    </nav>
+  </header>
+
+  <main class="case">
+    <section class="case-hero fade-in">
+      <div class="case-badges">
+        <span class="case-badge">Projet d'école</span>
+        <span class="case-badge">Maquette d'infrastructure</span>
+      </div>
+      <h1>Maquette d'infrastructure iris.local</h1>
+      <p class="case-lead">Une infrastructure Windows de PME entièrement redondante (deux contrôleurs de domaine, deux serveurs de fichiers), administrée par GPO, avec un outil de gestion de parc et de tickets (GLPI) relié à l'annuaire Active Directory.</p>
+      <div class="lab" role="img" aria-label="Schéma de la maquette iris.local : une passerelle NAT VMware en 192.168.10.254 donne accès à Internet au réseau 192.168.10.0/24. Deux contrôleurs de domaine AD1 et AD2 se répliquent l'annuaire et le DNS ; deux serveurs de fichiers FIC1 et FIC2 se répliquent par DFS-R sous l'espace de noms \\iris.local\Partages ; le serveur GLPI interroge l'annuaire en LDAP et inventorie les machines ; le poste client CLI-01 accède aux fichiers par DFS.">
+        <div class="lab-gw"><strong>Passerelle NAT VMnet8 · 192.168.10.254</strong><span>Accès Internet (mises à jour, téléchargements)</span></div>
+        <div class="lab-net">
+          <span class="lab-net-title">VMnet8 · 192.168.10.0/24 · domaine iris.local</span>
+          <div class="lab-pair">
+            <div class="lab-node is-primary">
+              <strong>AD1</strong><span class="lab-ip">192.168.10.10</span>
+              <span>Windows Server 2025 (GUI) · 4 Go</span>
+              <span>AD DS, DNS, DHCP · 5 rôles FSMO</span>
+            </div>
+            <span class="lab-link">Réplication AD + DNS</span>
+            <div class="lab-node">
+              <strong>AD2</strong><span class="lab-ip">192.168.10.11</span>
+              <span>Windows Server 2025 Core · 2 Go</span>
+              <span>AD DS, DNS, DHCP (basculement)</span>
+            </div>
+          </div>
+          <div class="lab-pair">
+            <div class="lab-node">
+              <strong>FIC1</strong><span class="lab-ip">192.168.10.12</span>
+              <span>Windows Server 2025 (GUI) · 3 Go</span>
+              <span>Partages, FSRM · cible DFS prioritaire</span>
+            </div>
+            <span class="lab-link">DFS-R (réplication)</span>
+            <div class="lab-node">
+              <strong>FIC2</strong><span class="lab-ip">192.168.10.13</span>
+              <span>Windows Server 2025 (GUI) · 3 Go</span>
+              <span>Mêmes partages · cible DFS de secours</span>
+            </div>
+          </div>
+          <p class="lab-ns">Espace de noms \\iris.local\Partages</p>
+          <div class="lab-pair is-plain">
+            <div class="lab-node">
+              <strong>glpi</strong><span class="lab-ip">192.168.10.20</span>
+              <span>Debian 13 · Apache, MariaDB, PHP 8.4</span>
+              <span>GLPI 11 · LDAP AD1 + réplique AD2</span>
+            </div>
+            <div class="lab-node">
+              <strong>CLI-01</strong><span class="lab-ip">192.168.10.50</span>
+              <span>Windows 11 Pro · IP par DHCP (réservation)</span>
+              <span>Lecteurs S:, P:, U: · agent GLPI</span>
+            </div>
+          </div>
+          <p class="lab-flows">glpi ↔ AD : LDAP (svc-glpi) · CLI-01 ↔ FIC : SMB via DFS · toutes les machines ↔ glpi : inventaire HTTP</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="case-layout">
+      <aside class="case-facts" aria-label="Le projet en bref">
+        <h2>En bref</h2>
+        <dl>
+          <div><dt>Type</dt><dd>Maquette d'infrastructure, projet d'école</dd></div>
+          <div><dt>Période</dt><dd>Novembre 2026</dd></div>
+          <div><dt>Environnement</dt><dd>VMware Workstation sur portable (32 Go de RAM), 6 machines virtuelles</dd></div>
+          <div><dt>Domaine</dt><dd>iris.local (NetBIOS IRIS), réseau 192.168.10.0/24</dd></div>
+        </dl>
+        <h3>Technologies</h3>
+        <div class="case-tags">
+          <span>Windows Server 2025</span>
+          <span>Server Core</span>
+          <span>AD DS</span>
+          <span>DNS</span>
+          <span>DHCP</span>
+          <span>DFS</span>
+          <span>FSRM</span>
+          <span>GPO</span>
+          <span>Debian 13</span>
+          <span>GLPI 11</span>
+          <span>LDAP</span>
+          <span>VMware</span>
+        </div>
+      </aside>
+
+      <article class="case-main">
+        <section class="case-section fade-in">
+          <h2>En résumé</h2>
+          <p>Chaque service critique existe en double, et la bascule a été testée : un serveur éteint ne coupe ni l'authentification, ni l'adressage IP, ni l'accès aux fichiers.</p>
+        </section>
+
+        <section class="case-section fade-in">
+          <h2>Points clés</h2>
+          <ul class="key-points">
+            <li><strong>Deux contrôleurs de domaine :</strong> AD1 avec interface, AD2 en Server Core, réplication à 0 échec</li>
+            <li><strong>DHCP en basculement</strong> 50/50 entre AD1 et AD2</li>
+            <li><strong>Méthode AGDLP :</strong> les accès se gèrent par groupes, sans retoucher les droits sur les serveurs</li>
+            <li><strong>DFS :</strong> espace de noms \\iris.local\Partages, répliqué entre FIC1 et FIC2</li>
+            <li><strong>FSRM :</strong> quota de 500 Mo par service et blocage des fichiers audio et vidéo</li>
+            <li><strong>GPO :</strong> lecteurs réseau, verrouillage de session, stockage USB bloqué, mots de passe de 12 caractères</li>
+            <li><strong>GLPI 11</strong> sur Debian 13 : connexion avec le compte AD (LDAP) et inventaire des 6 machines</li>
+          </ul>
+        </section>
+
+        <section class="case-section fade-in">
+          <h2>Pour aller plus loin</h2>
+          <p class="deep-links-note">Chaque lien s'ouvre dans un nouvel onglet.</p>
+          <div class="deep-links">
+            <a href="iris-detail.html#plan-d-adressage" target="_blank" rel="noopener"><strong>Plan d'adressage</strong><span>Les 6 machines, leurs rôles et leurs IP</span></a>
+            <a href="iris-detail.html#active-directory-et-dns" target="_blank" rel="noopener"><strong>Active Directory et DNS</strong><span>Promotion des deux DC et vérifications</span></a>
+            <a href="iris-detail.html#dhcp-en-basculement" target="_blank" rel="noopener"><strong>DHCP en basculement</strong><span>Étendue, options et réservation</span></a>
+            <a href="iris-detail.html#annuaire-et-methode-agdlp" target="_blank" rel="noopener"><strong>Annuaire et AGDLP</strong><span>Arborescence des OU et des groupes</span></a>
+            <a href="iris-detail.html#fichiers-dfs-et-fsrm" target="_blank" rel="noopener"><strong>Fichiers, DFS et FSRM</strong><span>Partages, réplication, quotas et filtres</span></a>
+            <a href="iris-detail.html#strategies-de-groupe" target="_blank" rel="noopener"><strong>Stratégies de groupe</strong><span>Les 6 GPO et leur diagnostic</span></a>
+            <a href="iris-detail.html#glpi-et-liaison-ldap" target="_blank" rel="noopener"><strong>GLPI et liaison LDAP</strong><span>Installation, sécurisation, inventaire</span></a>
+            <a href="iris-detail.html#pannes-rencontrees-et-resolues" target="_blank" rel="noopener"><strong>Pannes rencontrées et résolues</strong><span>15 pannes : diagnostic, cause, correction</span></a>
+            <a href="iris-detail.html#pistes-d-evolution" target="_blank" rel="noopener"><strong>Pistes d'évolution</strong><span>Ce que je ferais en production</span></a>
+          </div>
+        </section>
+      </article>
+    </div>
+
+    <nav class="case-pager" aria-label="Autres projets">
+      <a href="homelab.html" class="case-pager-next">
+        <span>Projet suivant &#8594;</span>
+        <strong>Homelab auto-hébergé</strong>
+      </a>
+    </nav>
+  </main>
+
+  <footer class="site-footer">
+    <p class="footer-bottom">&copy; <span id="year"></span> Alexis Beaufils · BTS SIO SISR · <a href="index.html#contact">Me contacter</a></p>
+  </footer>
+
+  <button id="scrollTopBtn" type="button" title="Retour en haut" aria-label="Retour en haut">&#8593;</button>
+
+  <script src="script.js?v=2026-11-18" defer></script>
+</body>
+</html>

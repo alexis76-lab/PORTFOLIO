@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Maquette d'infrastructure iris.local : Active Directory redondant sur deux contrôleurs dont un en Server Core, DHCP en basculement, DFS et FSRM sur deux serveurs de fichiers, GPO et GLPI relié à l'annuaire, sous VMware Workstation.">
+  <title>Détail - Maquette d'infrastructure iris.local</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#0c0c0d" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#fafafa" media="(prefers-color-scheme: light)">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:site_name" content="Alexis Beaufils - Portfolio BTS SIO SISR">
+  <meta property="og:title" content="Détail - Maquette d'infrastructure iris.local">
+  <meta property="og:description" content="Maquette d'infrastructure iris.local : Active Directory redondant sur deux contrôleurs dont un en Server Core, DHCP en basculement, DFS et FSRM sur deux serveurs de fichiers, GPO et GLPI relié à l'annuaire, sous VMware Workstation.">
+  <meta name="twitter:card" content="summary">
+  <meta name="color-scheme" content="dark light">
+  <script>
+    (function () {
+      var theme = null;
+      try { theme = localStorage.getItem("theme"); } catch (error) {}
+      if (theme !== "light" && theme !== "dark") {
+        theme = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+      }
+      document.documentElement.dataset.theme = theme;
+    })();
+  </script>
+  <link rel="stylesheet" href="style.css?v=2026-11-18">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="index.html" class="brand" aria-label="Alexis Beaufils - retour à l'accueil">
+        <span class="brand-mark">AB</span>
+        <span class="brand-name">Alexis Beaufils</span>
+      </a>
+      <div class="nav-actions">
+        <a href="iris.html" class="case-back">&#8592; Résumé du projet</a>
+        <button class="theme-toggle" type="button" aria-label="Changer de thème"></button>
+      </div>
+    </nav>
+  </header>
+
+  <main class="case">
+    <section class="case-hero fade-in">
+      <div class="case-badges">
+        <span class="case-badge detail">Version détaillée</span>
+        <span class="case-badge">Projet d'école</span>
+        <span class="case-badge">Maquette d'infrastructure</span>
+      </div>
+      <h1>Maquette d'infrastructure iris.local</h1>
+      <p class="case-lead">Active Directory redondant · DHCP · DFS · FSRM · GPO · GLPI. Une infrastructure Windows de PME entièrement redondante, administrée par GPO, avec un outil de gestion de parc et de tickets relié à l'annuaire.</p>
+    </section>
+
+    <div class="case-layout">
+      <aside class="case-facts" aria-label="Le projet en bref">
+        <h2>En bref</h2>
+        <dl>
+          <div><dt>Type</dt><dd>Maquette d'infrastructure, projet d'école</dd></div>
+          <div><dt>Période</dt><dd>Novembre 2026</dd></div>
+          <div><dt>Environnement</dt><dd>VMware Workstation sur portable (32 Go de RAM), 6 machines virtuelles</dd></div>
+          <div><dt>Domaine</dt><dd>iris.local (NetBIOS IRIS), réseau 192.168.10.0/24</dd></div>
+        </dl>
+        <h3>Technologies</h3>
+        <div class="case-tags">
+          <span>Windows Server 2025</span>
+          <span>Server Core</span>
+          <span>AD DS</span>
+          <span>DNS</span>
+          <span>DHCP</span>
+          <span>DFS-N</span>
+          <span>DFS-R</span>
+          <span>FSRM</span>
+          <span>GPO</span>
+          <span>Debian 13</span>
+          <span>GLPI 11</span>
+          <span>LDAP</span>
+          <span>PowerShell</span>
+          <span>VMware</span>
+        </div>
+      </aside>
+
+      <article class="case-main">
+        <section class="case-section" id="contexte">
+          <h2>Contexte</h2>
+          <p>Le projet en une phrase : une infrastructure Windows de PME entièrement redondante (deux contrôleurs de domaine, deux serveurs de fichiers), administrée par GPO, avec un outil de gestion de parc et de tickets (GLPI) relié à l'annuaire Active Directory.</p>
+          <p>Chaque service critique existe en double, et la bascule a été testée : un serveur éteint ne coupe ni l'authentification, ni l'adressage IP, ni l'accès aux fichiers.</p>
+        </section>
+
+        <section class="case-section" id="architecture">
+          <h2>Architecture</h2>
+      <div class="lab" role="img" aria-label="Schéma de la maquette iris.local : une passerelle NAT VMware en 192.168.10.254 donne accès à Internet au réseau 192.168.10.0/24. Deux contrôleurs de domaine AD1 et AD2 se répliquent l'annuaire et le DNS ; deux serveurs de fichiers FIC1 et FIC2 se répliquent par DFS-R sous l'espace de noms \\iris.local\Partages ; le serveur GLPI interroge l'annuaire en LDAP et inventorie les machines ; le poste client CLI-01 accède aux fichiers par DFS.">
+        <div class="lab-gw"><strong>Passerelle NAT VMnet8 · 192.168.10.254</strong><span>Accès Internet (mises à jour, téléchargements)</span></div>
+        <div class="lab-net">
+          <span class="lab-net-title">VMnet8 · 192.168.10.0/24 · domaine iris.local</span>
+          <div class="lab-pair">
+            <div class="lab-node is-primary">
+              <strong>AD1</strong><span class="lab-ip">192.168.10.10</span>
+              <span>Windows Server 2025 (GUI) · 4 Go</span>
+              <span>AD DS, DNS, DHCP · 5 rôles FSMO</span>
+            </div>
+            <span class="lab-link">Réplication AD + DNS</span>
+            <div class="lab-node">
+              <strong>AD2</strong><span class="lab-ip">192.168.10.11</span>
+              <span>Windows Server 2025 Core · 2 Go</span>
+              <span>AD DS, DNS, DHCP (basculement)</span>
+            </div>
+          </div>
+          <div class="lab-pair">
+            <div class="lab-node">
+              <strong>FIC1</strong><span class="lab-ip">192.168.10.12</span>
+              <span>Windows Server 2025 (GUI) · 3 Go</span>
+              <span>Partages, FSRM · cible DFS prioritaire</span>
+            </div>
+            <span class="lab-link">DFS-R (réplication)</span>
+            <div class="lab-node">
+              <strong>FIC2</strong><span class="lab-ip">192.168.10.13</span>
+              <span>Windows Server 2025 (GUI) · 3 Go</span>
+              <span>Mêmes partages · cible DFS de secours</span>
+            </div>
+          </div>
+          <p class="lab-ns">Espace de noms \\iris.local\Partages</p>
+          <div class="lab-pair is-plain">
+            <div class="lab-node">
+              <strong>glpi</strong><span class="lab-ip">192.168.10.20</span>
+              <span>Debian 13 · Apache, MariaDB, PHP 8.4</span>
+              <span>GLPI 11 · LDAP AD1 + réplique AD2</span>
+            </div>
+            <div class="lab-node">
+              <strong>CLI-01</strong><span class="lab-ip">192.168.10.50</span>
+              <span>Windows 11 Pro · IP par DHCP (réservation)</span>
+              <span>Lecteurs S:, P:, U: · agent GLPI</span>
+            </div>
+          </div>
+          <p class="lab-flows">glpi ↔ AD : LDAP (svc-glpi) · CLI-01 ↔ FIC : SMB via DFS · toutes les machines ↔ glpi : inventaire HTTP</p>
+        </div>
+      </div>
+          <p class="case-note">Le poste client obtient son adresse auprès de l'un ou l'autre DC et accède aux fichiers par le chemin DFS, jamais par le nom d'un serveur.</p>
+        </section>
+
+        <section class="case-section" id="plan-d-adressage">
+          <h2>Plan d'adressage</h2>
+          <table class="data-table">
+            <thead>
+              <tr><th scope="col">Machine</th><th scope="col">OS</th><th scope="col">Rôles</th><th scope="col">IP</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>AD1</td><td>Windows Server 2025 (GUI)</td><td>AD DS, DNS, DHCP, 5 rôles FSMO</td><td>192.168.10.10</td></tr>
+              <tr><td>AD2</td><td>Windows Server 2025 Core</td><td>AD DS, DNS, DHCP (basculement)</td><td>192.168.10.11</td></tr>
+              <tr><td>FIC1</td><td>Windows Server 2025 (GUI)</td><td>Fichiers, FSRM, DFS-N, DFS-R</td><td>192.168.10.12</td></tr>
+              <tr><td>FIC2</td><td>Windows Server 2025 (GUI)</td><td>Fichiers, FSRM, DFS-N, DFS-R</td><td>192.168.10.13</td></tr>
+              <tr><td>glpi</td><td>Debian 13 (Trixie)</td><td>Apache, MariaDB, PHP, GLPI 11</td><td>192.168.10.20</td></tr>
+              <tr><td>CLI-01</td><td>Windows 11 Pro</td><td>Poste client, agent GLPI</td><td>DHCP → .50 (réservation)</td></tr>
+            </tbody>
+          </table>
+          <p class="case-note">Passerelle : 192.168.10.254 (NAT de VMware) · Étendue DHCP : .100 à .200 · Options : 003 routeur, 006 DNS (.10 et .11), 015 suffixe iris.local. Ordre de démarrage : AD1 → AD2 → FIC1 → FIC2 → glpi → CLI-01, les DC d'abord car tout le reste dépend de leur DNS et de leur DHCP.</p>
+        </section>
+
+        <section class="case-section" id="virtualisation">
+          <h2>Virtualisation sous VMware Workstation</h2>
+          <ul class="case-list">
+            <li><strong>Réseau VMnet8 (NAT)</strong> reconfiguré : sous-réseau 192.168.10.0/24, passerelle NAT en .254, DHCP de VMware désactivé pour que ce soit l'AD qui distribue les adresses.</li>
+            <li><strong>Modèle Sysprep :</strong> une VM modèle généralisée avec <code>sysprep /generalize /oobe /shutdown</code>, puis des clones liés pour AD1, FIC1 et FIC2. AD2, seule VM en Core, est installée directement depuis l'ISO.</li>
+            <li>Sysprep supprime l'identifiant unique (SID) de la machine : sans lui, les clones auraient tous le même SID, ce qui pose problème pour la jonction au domaine. Les clones liés ne stockent que les différences avec le modèle.</li>
+            <li><strong>Snapshots</strong> à chaque étape validée, VM éteintes (cohérence de l'AD au retour arrière).</li>
+            <li>Windows 11 exige UEFI, démarrage sécurisé et TPM 2.0 : TPM virtuel ajouté sur une VM chiffrée.</li>
+          </ul>
+        </section>
+
+        <section class="case-section" id="active-directory-et-dns">
+          <h2>Active Directory et DNS (AD1 + AD2)</h2>
+          <p><strong>Ordre suivi :</strong> nom + IP fixe → DNS → rôle AD DS → promotion → vérifications → UO → groupes → GPO. Un DC ne se renomme jamais après sa promotion.</p>
+          <pre class="case-code"><code>Install-WindowsFeature AD-Domain-Services -IncludeManagementTools
+Install-ADDSForest -DomainName "iris.local" -DomainNetbiosName "IRIS" `
+  -ForestMode "WinThreshold" -DomainMode "WinThreshold" -InstallDns:$true
+
+# Sur AD2 (DNS pointé sur AD1 AVANT la promotion)
+Install-ADDSDomainController -DomainName "iris.local" `
+  -Credential (Get-Credential "IRIS\Administrateur") -InstallDns:$true `
+  -ReplicationSourceDC "AD1.iris.local"</code></pre>
+          <h3 class="case-subtitle">Vérifications</h3>
+          <table class="data-table">
+            <thead>
+              <tr><th scope="col">Commande</th><th scope="col">Ce qu'elle prouve</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>dcdiag /q</code></td><td>Santé du DC : aucune sortie = tout va bien</td></tr>
+              <tr><td><code>netdom query fsmo</code></td><td>Où sont les 5 rôles FSMO (ici tous sur AD1)</td></tr>
+              <tr><td><code>repadmin /replsummary</code></td><td>Résumé de la réplication : 0 échec attendu dans les deux sens</td></tr>
+              <tr><td><code>repadmin /showrepl AD2</code></td><td>Détail partition par partition, avec la date de la dernière réussite</td></tr>
+              <tr><td><code>repadmin /syncall /AdeP</code></td><td>Force une réplication immédiate de toutes les partitions</td></tr>
+              <tr><td><code>Get-ADDomainController -Filter *</code></td><td>Liste des DC, avec IP et catalogue global</td></tr>
+              <tr><td><code>nslookup iris.local</code></td><td>Le DNS répond (serveur localhost, sans « UnKnown »)</td></tr>
+              <tr><td><code>w32tm /query /status</code></td><td>Source de temps : le PDC (AD1) est synchronisé sur fr.pool.ntp.org</td></tr>
+            </tbody>
+          </table>
+          <ul class="case-list">
+            <li><strong>DNS croisés :</strong> chaque DC interroge l'autre en premier, lui-même en second. Ça évite l'« îlot DNS » où un DC ne verrait plus les mises à jour de son partenaire.</li>
+            <li><strong>Zone de recherche inversée</strong> 192.168.10.0/24 créée (sinon nslookup affiche « UnKnown »).</li>
+            <li><strong>Redirecteurs</strong> 1.1.1.1 et 8.8.8.8 pour résoudre les noms Internet.</li>
+            <li><strong>NTP :</strong> le PDC (AD1) se synchronise sur fr.pool.ntp.org ; tout le domaine se cale sur lui. Kerberos refuse un écart de plus de 5 minutes.</li>
+            <li><strong>Tolérance de panne testée :</strong> avec AD1 éteint, <code>%LOGONSERVER%</code> affiche \\AD2 sur le poste client.</li>
+          </ul>
+          <figure class="shot">
+            <div class="shot-frame" data-file="iris-replsummary.png">
+              <img src="images/iris/iris-replsummary.png" alt="Résultat de repadmin /replsummary : 0 échec dans les deux sens">
+            </div>
+            <figcaption>Réplication AD à 0 échec dans les deux sens (repadmin /replsummary).</figcaption>
+          </figure>
+        </section>
+
+        <section class="case-section" id="dhcp-en-basculement">
+          <h2>DHCP en basculement</h2>
+          <pre class="case-code"><code>Add-DhcpServerInDC -DnsName AD1.iris.local -IPAddress 192.168.10.10
+Add-DhcpServerv4Scope -Name "LAN-IRIS" -StartRange 192.168.10.100 `
+  -EndRange 192.168.10.200 -SubnetMask 255.255.255.0 -State Active
+Set-DhcpServerv4OptionValue -ScopeId 192.168.10.0 -Router 192.168.10.254 `
+  -DnsServer 192.168.10.10,192.168.10.11 -DnsDomain iris.local
+Add-DhcpServerv4Failover -ComputerName AD1.iris.local -Name "Failover-AD1-AD2" `
+  -PartnerServer AD2.iris.local -ScopeId 192.168.10.0 -LoadBalancePercent 50
+Invoke-DhcpServerv4FailoverReplication -ScopeId 192.168.10.0 -Force</code></pre>
+          <ul class="case-list">
+            <li><strong>Autorisation dans l'AD :</strong> un serveur DHCP Windows non autorisé ne distribue rien (protection contre les DHCP pirates).</li>
+            <li><strong>Équilibrage 50/50 :</strong> les deux serveurs se partagent les clients ; si l'un tombe, l'autre reprend toute la plage.</li>
+            <li><strong>MCLT</strong> (Maximum Client Lead Time, 1 h) : un nouveau client reçoit d'abord un bail court, le temps que les partenaires se synchronisent.</li>
+            <li>Une modification faite après la création du basculement (réservation) doit être répliquée avec <code>Invoke-DhcpServerv4FailoverReplication</code>.</li>
+            <li><strong>Réservation plutôt qu'IP fixe</strong> pour le poste : il garde toujours la même adresse, mais tout reste géré depuis le serveur DHCP.</li>
+          </ul>
+          <figure class="shot">
+            <div class="shot-frame" data-file="iris-dhcp-client.png">
+              <img src="images/iris/iris-dhcp-client.png" alt="ipconfig /all sur CLI-01 : adresse, passerelle, DNS et suffixe iris.local fournis par le DHCP">
+            </div>
+            <figcaption>CLI-01 configuré par le DHCP de l'AD : IP, passerelle, DNS et suffixe iris.local.</figcaption>
+          </figure>
+        </section>
+
+        <section class="case-section" id="annuaire-et-methode-agdlp">
+          <h2>Annuaire et méthode AGDLP</h2>
+          <pre class="case-code"><code>iris.local
+└── IRIS
+    ├── Utilisateurs
+    │   ├── Direction · Comptabilite · RH · Technique
+    │   └── DSI
+    ├── Ordinateurs
+    │   ├── Postes    (CLI-01 · redircmp pointe ici)
+    │   └── Serveurs  (FIC1, FIC2)
+    ├── Groupes
+    │   ├── Globaux          (GG_Direction, GG_Comptabilite, ...)
+    │   └── Domaine-Locaux   (DL_xxx_RW, DL_Comptabilite_R, DL_Commun_RW)
+    └── Comptes-Services     (svc-glpi)</code></pre>
+          <table class="data-table">
+            <thead>
+              <tr><th scope="col">Groupe global (métier)</th><th scope="col">Membre de (ressource)</th><th scope="col">Dossier</th><th scope="col">Droit NTFS</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>GG_Direction</td><td>DL_Direction_RW</td><td>Services\Direction</td><td>Modification</td></tr>
+              <tr><td>GG_Direction</td><td>DL_Comptabilite_R</td><td>Services\Comptabilite</td><td>Lecture et exécution</td></tr>
+              <tr><td>GG_Comptabilite</td><td>DL_Comptabilite_RW</td><td>Services\Comptabilite</td><td>Modification</td></tr>
+              <tr><td>GG_RH / GG_Technique / GG_DSI</td><td>DL_xxx_RW</td><td>Services\xxx</td><td>Modification</td></tr>
+              <tr><td>Tous les GG_</td><td>DL_Commun_RW</td><td>Commun</td><td>Modification</td></tr>
+            </tbody>
+          </table>
+          <ul class="case-list">
+            <li><strong>A-G-DL-P :</strong> compte (Account) → groupe Global (métier) → groupe Domaine Local (ressource) → Permission. Un nouvel arrivant = une seule action : l'ajouter à son GG_.</li>
+            <li><strong>Une UO ne donne aucun droit :</strong> elle sert à cibler les GPO et à déléguer. Ce sont les groupes qui donnent les accès.</li>
+            <li>Exemple : la Direction a un accès en lecture seule à la Comptabilité, car GG_Direction est membre de DL_Comptabilite_R.</li>
+            <li><strong>Création par script PowerShell</strong> (Creation-AD.ps1) : UO, groupes, imbrications, 10 utilisateurs, compte de service svc-glpi et compte d'administration nominatif.</li>
+            <li><strong>redircmp :</strong> les ordinateurs joints au domaine arrivent dans OU=Postes (le conteneur Computers ne peut pas recevoir de GPO).</li>
+            <li><strong>Protection contre la suppression accidentelle</strong> sur les UO.</li>
+          </ul>
+        </section>
+
+        <section class="case-section" id="fichiers-dfs-et-fsrm">
+          <h2>Fichiers, DFS et FSRM</h2>
+          <p>Arborescence identique sur FIC1 et FIC2 : <code>E:\Partages\Commun</code>, <code>E:\Partages\Services\&lt;service&gt;</code>, <code>E:\Partages\Perso\&lt;utilisateur&gt;</code>. Droits posés par script (Partages-FIC.ps1 et Perso-FIC.ps1) avec icacls.</p>
+          <ul class="case-list">
+            <li><strong>Partage contre NTFS :</strong> partages ouverts aux Utilisateurs authentifiés, c'est NTFS qui filtre. Quand les deux s'appliquent, le plus restrictif gagne.</li>
+            <li><strong>ABE</strong> (énumération basée sur l'accès) : chacun ne voit que les dossiers auxquels il a droit.</li>
+            <li><strong>DFS-N :</strong> espace de noms de domaine \\iris.local\Partages, hébergé sur FIC1 et FIC2, avec les dossiers Commun, Services et Perso, chacun avec deux cibles.</li>
+            <li><strong>DFS-R :</strong> un groupe de réplication par dossier, maille pleine, FIC1 en membre principal (il fait foi à la première synchronisation).</li>
+            <li><strong>FIC2 en « Dernier parmi toutes les cibles » :</strong> tout le monde travaille sur FIC1 tant qu'il répond, ce qui évite les conflits d'écriture (DFS-R ne verrouille pas les fichiers).</li>
+            <li><strong>Bascule côté client :</strong> quand FIC1 ne répond plus, le poste redemande la liste des cibles et passe sur FIC2, en quelques secondes à une minute. Un fichier créé pendant la panne se retrouve sur FIC1 à son retour, grâce à DFS-R.</li>
+          </ul>
+          <h3 class="case-subtitle">FSRM : quotas et filtrage</h3>
+          <ul class="case-list">
+            <li><strong>Modèle de quota « Service 500 Mo »,</strong> inconditionnel (bloque l'écriture), avertissement à 85 % dans le journal des événements.</li>
+            <li><strong>Quota automatique</strong> sur E:\Partages\Services : chaque sous-dossier reçoit ses propres 500 Mo, y compris un service créé plus tard.</li>
+            <li><strong>Filtre actif</strong> « Bloquer les fichiers audio et vidéo » sur Commun.</li>
+            <li>Les réglages FSRM ne sont pas répliqués par DFS : configuration refaite sur FIC1 et FIC2.</li>
+            <li><strong>Tests :</strong> un fichier de 600 Mo dans RH donne « Erreur 112 : espace insuffisant » ; un .mp3 dans Commun donne « Accès refusé ».</li>
+          </ul>
+          <div class="shot-pair">
+            <figure class="shot">
+              <div class="shot-frame" data-file="iris-dfsr-evenements.png">
+                <img src="images/iris/iris-dfsr-evenements.png" alt="Journal DFS Replication sur FIC2 : événements 4102, 4002 et 4104">
+              </div>
+              <figcaption>DFS-R sur FIC2 : séquence 4102, 4002, 4104 (synchronisation initiale terminée).</figcaption>
+            </figure>
+            <figure class="shot">
+              <div class="shot-frame" data-file="iris-dfs-test.png">
+                <img src="images/iris/iris-dfs-test.png" alt="Fichier test créé dans \\iris.local\Partages\Commun">
+              </div>
+              <figcaption>Fichier test créé via \\iris.local\Partages\Commun.</figcaption>
+            </figure>
+          </div>
+          <figure class="shot">
+            <div class="shot-frame" data-file="iris-fsrm.png">
+              <img src="images/iris/iris-fsrm.png" alt="FSRM : quota dépassé (erreur 112) et fichier .mp3 refusé dans Commun">
+            </div>
+            <figcaption>FSRM : quota dépassé (erreur 112) et fichier .mp3 refusé dans Commun.</figcaption>
+          </figure>
+        </section>
+
+        <section class="case-section" id="strategies-de-groupe">
+          <h2>Stratégies de groupe (GPO)</h2>
+          <table class="data-table">
+            <thead>
+              <tr><th scope="col">GPO</th><th scope="col">Moitié</th><th scope="col">Liée à</th><th scope="col">Effet</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>IRIS-CFG-Lecteurs_Reseau</td><td>Utilisateur (Préférences)</td><td>Utilisateurs</td><td>S: Commun · P: dossier perso · U: dossier du service (ciblage par GG_)</td></tr>
+              <tr><td>IRIS-SEC-Verrouillage_Session</td><td>Utilisateur</td><td>Utilisateurs</td><td>Écran de veille protégé par mot de passe après 10 min</td></tr>
+              <tr><td>IRIS-SEC-Panneau_Config</td><td>Utilisateur</td><td>Utilisateurs</td><td>Panneau de configuration interdit ; GG_DSI exemptée</td></tr>
+              <tr><td>IRIS-SEC-Stockage_USB</td><td>Ordinateur</td><td>Postes</td><td>Tout stockage amovible refusé</td></tr>
+              <tr><td>Default Domain Policy</td><td>Ordinateur</td><td>Domaine</td><td>Mot de passe 12 caractères + complexité · verrouillage après 5 essais pendant 10 min</td></tr>
+              <tr><td>Default Domain Controllers Policy</td><td>Ordinateur</td><td>Domain Controllers</td><td>Signature LDAP assouplie pour GLPI (voir les pannes)</td></tr>
+            </tbody>
+          </table>
+          <ul class="case-list">
+            <li><strong>Méthode :</strong> créer dans « Objets de stratégie de groupe », désactiver la moitié inutile, commenter, lier à l'UO, filtrer si besoin.</li>
+            <li><strong>Ordre d'application LSDOU :</strong> Local, Site, Domaine, UO. La dernière appliquée gagne en cas de conflit.</li>
+            <li>La stratégie de mot de passe des comptes du domaine se définit au niveau du domaine ; pour une règle différente par groupe, il faut une stratégie de mot de passe affinée (PSO).</li>
+            <li>Les lecteurs réseau utilisent le chemin DFS, jamais \\FIC1 : sinon la redondance ne sert à rien.</li>
+            <li><strong>Exemption de la DSI :</strong> refus de « Appliquer la stratégie de groupe » dans l'onglet Délégation ; <code>gpresult</code> montre alors la GPO dans les GPO filtrées, avec la mention Refusé (sécurité).</li>
+            <li>Le script GPO-IRIS.ps1 crée les GPO avec <code>Set-GPRegistryValue</code> et écrit le Drives.xml des Préférences.</li>
+          </ul>
+          <pre class="case-code"><code>gpupdate /force
+gpresult /r                       # liste des GPO appliquées et filtrées
+gpresult /h C:\rapport.html /f    # rapport détaillé
+echo %LOGONSERVER%                # DC qui a authentifié la session</code></pre>
+          <div class="shot-pair">
+            <figure class="shot">
+              <div class="shot-frame" data-file="iris-gpo-console.png">
+                <img src="images/iris/iris-gpo-console.png" alt="Console de gestion des stratégies de groupe avec les GPO liées aux UO Postes et Utilisateurs">
+              </div>
+              <figcaption>GPO liées aux UO Postes et Utilisateurs dans la console de gestion.</figcaption>
+            </figure>
+            <figure class="shot">
+              <div class="shot-frame" data-file="iris-mdp-domaine.png">
+                <img src="images/iris/iris-mdp-domaine.png" alt="Get-ADDefaultDomainPasswordPolicy : 12 caractères, complexité et verrouillage à 5 essais">
+              </div>
+              <figcaption>Stratégie de mot de passe et de verrouillage appliquée au domaine.</figcaption>
+            </figure>
+          </div>
+        </section>
+
+        <section class="case-section" id="glpi-et-liaison-ldap">
+          <h2>GLPI : gestion de parc et assistance</h2>
+          <p><strong>Pile LAMP</strong> sur Debian 13 : Linux, Apache 2.4, MariaDB 11.8, PHP 8.4. <strong>GLPI 11.0.13</strong>, choisi car c'est une version supportée compatible avec les paquets de Debian (GLPI 12 a des prérequis plus élevés).</p>
+          <ul class="case-list">
+            <li><strong>DocumentRoot sur /public :</strong> la configuration (avec le mot de passe de la base) n'est pas accessible depuis le web.</li>
+            <li><strong>Utilisateur MariaDB dédié</strong> avec des droits sur sa seule base : moindre privilège.</li>
+            <li><strong>Sécurisation :</strong> données de démonstration désactivées, mots de passe des comptes par défaut changés, install.php supprimé, <code>session.cookie_httponly</code> activé.</li>
+            <li><strong>Enregistrement DNS</strong> glpi.iris.local (A + PTR) sur AD1.</li>
+          </ul>
+          <h3 class="case-subtitle">Liaison LDAP avec l'Active Directory</h3>
+          <table class="data-table">
+            <thead>
+              <tr><th scope="col">Paramètre</th><th scope="col">Valeur</th><th scope="col">Pourquoi</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Serveur / port</td><td>AD1 : 389 + réplique AD2</td><td>Authentification maintenue si AD1 tombe</td></tr>
+              <tr><td>BaseDN</td><td>OU=Utilisateurs,OU=IRIS,DC=iris,DC=local</td><td>Ne remonter que les vrais utilisateurs</td></tr>
+              <tr><td>Filtre</td><td>objectCategory=person, comptes non désactivés</td><td>Exclure ordinateurs et comptes désactivés</td></tr>
+              <tr><td>Compte de bind</td><td>svc-glpi</td><td>Compte de service en lecture seule</td></tr>
+              <tr><td>Identifiant</td><td>samaccountname</td><td>Connexion avec le login Windows</td></tr>
+              <tr><td>Synchronisation</td><td>objectguid</td><td>Identifiant unique, stable même si le compte est renommé</td></tr>
+            </tbody>
+          </table>
+          <ul class="case-list">
+            <li>Test GLPI réussi en 5 étapes : flux TCP, Base DN, URI, bind, recherche (11 entrées).</li>
+            <li>Les utilisateurs se connectent à GLPI avec leur compte Windows : un seul mot de passe, et un compte désactivé dans l'AD perd aussi l'accès à GLPI.</li>
+            <li><strong>Agent GLPI 1.21</strong> sur les 6 machines : installé à distance en PowerShell sur les serveurs, par script Perl sur la Debian. L'inventaire natif est activé dans Administration &gt; Inventaire.</li>
+          </ul>
+          <div class="shot-pair">
+            <figure class="shot">
+              <div class="shot-frame" data-file="iris-glpi-test-ldap.png">
+                <img src="images/iris/iris-glpi-test-ldap.png" alt="Test de l'annuaire LDAP dans GLPI : 5 étapes réussies, 11 entrées trouvées">
+              </div>
+              <figcaption>Test LDAP de GLPI réussi : 5 étapes, 11 entrées trouvées.</figcaption>
+            </figure>
+            <figure class="shot">
+              <div class="shot-frame" data-file="iris-glpi-selfservice.png">
+                <img src="images/iris/iris-glpi-selfservice.png" alt="Utilisatrice connectée à l'interface Self-Service de GLPI avec son compte Active Directory">
+              </div>
+              <figcaption>Utilisatrice connectée à GLPI avec son compte Active Directory (Self-Service).</figcaption>
+            </figure>
+          </div>
+          <figure class="shot">
+            <div class="shot-frame" data-file="iris-glpi-inventaire.png">
+              <img src="images/iris/iris-glpi-inventaire.png" alt="Inventaire GLPI : les 6 machines de l'infrastructure remontées par l'agent">
+            </div>
+            <figcaption>Inventaire GLPI : les 6 machines de l'infrastructure remontées par l'agent.</figcaption>
+          </figure>
+        </section>
+
+        <section class="case-section" id="pannes-rencontrees-et-resolues">
+          <h2>Pannes rencontrées et résolues</h2>
+          <p>Pour chaque panne : le symptôme, la commande de diagnostic, la cause et la correction.</p>
+          <div class="incidents">
+            <div class="incident">
+              <h3>Réplication en échec, GPO illisibles (événement 1058)</h3>
+              <p><strong>Diagnostic :</strong> <code>Get-NetConnectionProfile</code> → réseau en Public.</p>
+              <p><strong>Cause :</strong> le service de détection réseau démarre avant l'AD et classe le réseau en Public : le pare-feu bloque.</p>
+              <p><strong>Correction :</strong> <code>Restart-NetAdapter</code> ; dépendance de NlaSvc sur DNS/NTDS ; démarrage différé (delayed-auto).</p>
+            </div>
+            <div class="incident">
+              <h3>nslookup : « Serveur UnKnown, Address ::1 » et délai</h3>
+              <p><strong>Diagnostic :</strong> <code>Get-DnsClientServerAddress</code>.</p>
+              <p><strong>Cause :</strong> la promotion a ajouté ::1 (localhost IPv6) en DNS.</p>
+              <p><strong>Correction :</strong> <code>Set-DnsClientServerAddress -ResetServerAddresses</code> puis 127.0.0.1.</p>
+            </div>
+            <div class="incident">
+              <h3>repadmin : erreurs 1722 et 58</h3>
+              <p><strong>Diagnostic :</strong> <code>Resolve-DnsName</code> du CNAME _msdcs d'AD2.</p>
+              <p><strong>Cause :</strong> AD1 interrogeait d'abord le DNS d'AD2, dont la copie de zone était incomplète.</p>
+              <p><strong>Correction :</strong> DNS d'AD1 temporairement sur 127.0.0.1 en premier, <code>Clear-DnsClientCache</code>, puis DNS recroisés.</p>
+            </div>
+            <div class="incident">
+              <h3>repadmin : erreurs 5 (accès refusé) et 1326</h3>
+              <p><strong>Diagnostic :</strong> analyse des codes d'erreur.</p>
+              <p><strong>Cause :</strong> tickets Kerberos périmés après le changement de mot de passe machine d'AD2.</p>
+              <p><strong>Correction :</strong> <code>klist purge</code> et <code>klist -li 0x3e7 purge</code>.</p>
+            </div>
+            <div class="incident">
+              <h3>repadmin : « topologie incomplète », erreur 1908</h3>
+              <p><strong>Diagnostic :</strong> <code>repadmin /showrepl</code>.</p>
+              <p><strong>Cause :</strong> le KCC n'avait pas encore créé les liens ; échecs en cache.</p>
+              <p><strong>Correction :</strong> <code>repadmin /kcc</code> sur les deux DC, redémarrage d'AD2.</p>
+            </div>
+            <div class="incident">
+              <h3>Dossiers de service lisibles par tous</h3>
+              <p><strong>Diagnostic :</strong> chemin E:\Partages\Commun\Services.</p>
+              <p><strong>Cause :</strong> Services rangé dans Commun : DL_Commun_RW hérité partout.</p>
+              <p><strong>Correction :</strong> script de correction : <code>icacls /reset</code> puis droits AGDLP reposés.</p>
+            </div>
+            <div class="incident">
+              <h3>Pas de lecteur E: sur les serveurs de fichiers</h3>
+              <p><strong>Diagnostic :</strong> Gestion des disques.</p>
+              <p><strong>Cause :</strong> disque ajouté dans VMware mais pas initialisé.</p>
+              <p><strong>Correction :</strong> initialisation GPT, volume simple NTFS « DATA ».</p>
+            </div>
+            <div class="incident">
+              <h3>CLI-01 en 169.254 (APIPA)</h3>
+              <p><strong>Diagnostic :</strong> IP fixe temporaire + ping : réseau OK.</p>
+              <p><strong>Cause :</strong> DC éteints au moment de la demande, puis service DHCP ne répondant pas.</p>
+              <p><strong>Correction :</strong> vérification des services, des liaisons DHCP et du pare-feu, puis <code>ipconfig /renew</code>.</p>
+            </div>
+            <div class="incident">
+              <h3>Erreur 1722 sur la réplication</h3>
+              <p><strong>Diagnostic :</strong> <code>repadmin /replsummary</code> : dernier succès il y a 23 h.</p>
+              <p><strong>Cause :</strong> AD2 éteint depuis la veille.</p>
+              <p><strong>Correction :</strong> démarrage d'AD2 et resynchronisation (un DC peut rester absent jusqu'à 180 jours).</p>
+            </div>
+            <div class="incident">
+              <h3>Bascule DFS qui semble ne pas marcher</h3>
+              <p><strong>Diagnostic :</strong> onglet DFS des propriétés du dossier.</p>
+              <p><strong>Cause :</strong> délai de bascule côté client (cache des références).</p>
+              <p><strong>Correction :</strong> attendre, ou vider l'historique / définir la cible active.</p>
+            </div>
+            <div class="incident">
+              <h3>Windows 11 refuse de s'installer</h3>
+              <p><strong>Diagnostic :</strong> écran « ne répond pas à la configuration requise ».</p>
+              <p><strong>Cause :</strong> prérequis matériels non détectés.</p>
+              <p><strong>Correction :</strong> clé LabConfig (BypassTPMCheck…), prévue par Microsoft pour les labos.</p>
+            </div>
+            <div class="incident">
+              <h3>Debian : DHCP en échec à l'installation</h3>
+              <p><strong>Cause :</strong> DC pas encore prêts.</p>
+              <p><strong>Correction :</strong> configuration manuelle de l'IP fixe dès l'installation.</p>
+            </div>
+            <div class="incident">
+              <h3>mysql_secure_installation introuvable</h3>
+              <p><strong>Cause :</strong> MariaDB 11 a renommé ses commandes.</p>
+              <p><strong>Correction :</strong> <code>mariadb-secure-installation</code>, <code>mariadb</code>, <code>mariadb-tzinfo-to-sql</code>.</p>
+            </div>
+            <div class="incident">
+              <h3>glpi.iris.local : NXDOMAIN</h3>
+              <p><strong>Diagnostic :</strong> message du navigateur.</p>
+              <p><strong>Cause :</strong> enregistrement DNS absent.</p>
+              <p><strong>Correction :</strong> nouvel hôte A + PTR dans la zone iris.local, <code>ipconfig /flushdns</code>.</p>
+            </div>
+            <div class="incident">
+              <h3>GLPI : test LDAP échoué</h3>
+              <p><strong>Diagnostic :</strong> <code>ldapsearch</code> → « Strong(er) authentication required (8) ».</p>
+              <p><strong>Cause :</strong> Windows Server 2025 impose la signature LDAP par défaut.</p>
+              <p><strong>Correction :</strong> signature assouplie dans la Default Domain Controllers Policy (piste d'amélioration : LDAPS).</p>
+            </div>
+          </div>
+          <div class="shot-pair">
+            <figure class="shot">
+              <div class="shot-frame" data-file="iris-ldap-avant.png">
+                <img src="images/iris/iris-ldap-avant.png" alt="ldapsearch : Strong(er) authentication required, Windows Server 2025 exige la signature">
+              </div>
+              <figcaption>Diagnostic LDAP : Windows Server 2025 exige la signature (avant correction).</figcaption>
+            </figure>
+            <figure class="shot">
+              <div class="shot-frame" data-file="iris-ldap-apres.png">
+                <img src="images/iris/iris-ldap-apres.png" alt="ldapsearch réussi avec le compte svc-glpi">
+              </div>
+              <figcaption>Diagnostic LDAP : recherche réussie avec svc-glpi (après correction).</figcaption>
+            </figure>
+          </div>
+        </section>
+
+        <section class="case-section" id="pistes-d-evolution">
+          <h2>Pistes d'évolution</h2>
+          <p><strong>Limite connue :</strong> la liaison GLPI-AD n'est pas chiffrée. Windows Server 2025 impose la signature LDAP ; pour la maquette, elle a été assouplie sur les DC, ce qui fait circuler le mot de passe de svc-glpi en clair. En attendant, ce compte n'a que des droits de lecture.</p>
+          <ul class="case-list">
+            <li><strong>LDAPS</strong> (port 636) entre GLPI et l'AD, avec une autorité de certification AD CS, et rétablir la signature LDAP obligatoire.</li>
+            <li><strong>GLPI en HTTPS</strong> avec un certificat de cette même AD CS, ce qui permet aussi d'activer <code>session.cookie_secure</code>.</li>
+            <li><strong>Déploiement de l'agent GLPI par GPO</strong> sur l'UO Postes, pour que chaque nouvelle machine remonte automatiquement.</li>
+            <li><strong>Sauvegardes :</strong> Windows Server Backup sur les DC (état du système), sauvegarde de la base MariaDB (mariadb-dump) et du dossier files de GLPI, Backup-GPO.</li>
+            <li><strong>Mises à jour centralisées</strong> (WSUS) et <strong>supervision</strong> des serveurs.</li>
+            <li><strong>Stratégies de mot de passe affinées</strong> (PSO) pour les comptes à privilèges.</li>
+            <li><strong>Licences :</strong> passer les VM d'évaluation (180 jours) en licences réelles.</li>
+          </ul>
+        </section>
+      </article>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p class="footer-bottom">&copy; <span id="year"></span> Alexis Beaufils · BTS SIO SISR · <a href="index.html#contact">Me contacter</a></p>
+  </footer>
+
+  <button id="scrollTopBtn" type="button" title="Retour en haut" aria-label="Retour en haut">&#8593;</button>
+
+  <script src="script.js?v=2026-11-18" defer></script>
+</body>
+</html>
