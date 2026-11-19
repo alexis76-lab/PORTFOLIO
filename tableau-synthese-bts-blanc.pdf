@@ -1,31 +1,10 @@
 %PDF-1.7
-%âãÏÓ
-1 0 obj
-<< /Type /Catalog /Pages 2 0 R >>
-endobj
-2 0 obj
-<< /Type /Pages /Kids [10 0 R 12 0 R] /Count 2 >>
-endobj
-3 0 obj
-<< /Producer (GridCraft PDF) /Creator (GridCraft) /Title <FEFF005400610062006C006500610075002000640065002000730079006E0074006800E8007300650020002D00200045007000720065007500760065002000450035002E0078006C00730078> /Author (Christine Gaubert-Macon) >>
-endobj
-4 0 obj
-<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>
-endobj
-5 0 obj
-<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>
-endobj
-6 0 obj
-<< /Type /Font /Subtype /Type0 /BaseFont /STSong-Light /Encoding /UniGB-UTF16-H /DescendantFonts [7 0 R] >>
-endobj
-7 0 obj
-<< /Type /Font /Subtype /CIDFontType0 /BaseFont /STSong-Light /CIDSystemInfo << /Registry (Adobe) /Ordering (GB1) /Supplement 4 >> /FontDescriptor 8 0 R /DW 1000 >>
-endobj
-8 0 obj
-<< /Type /FontDescriptor /FontName /STSong-Light /Flags 6 /FontBBox [-25 -254 1000 880] /ItalicAngle 0 /Ascent 880 /Descent -120 /CapHeight 880 /StemV 93 >>
-endobj
+%
+
 9 0 obj
-<< /Length 65671 >>
+<<
+/Length 65671
+>>
 stream
 q
 226.39 14.478 142.5 812.929 re W n
@@ -3029,13 +3008,14 @@ Q
 q
 226.39 14.478 142.5 812.929 re W n
 Q
+
 endstream
 endobj
-10 0 obj
-<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595.28 841.89] /Resources << /ProcSet [/PDF /Text /ImageB /ImageC] /Font << /F1 4 0 R /F2 5 0 R /F14 6 0 R >> >> /Contents 9 0 R >>
-endobj
+
 11 0 obj
-<< /Length 80 >>
+<<
+/Length 80
+>>
 stream
 q
 226.39 137.256 142.5 567.377 re W n
@@ -3043,28 +3023,40 @@ Q
 q
 226.39 137.256 142.5 567.377 re W n
 Q
+
 endstream
 endobj
-12 0 obj
-<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595.28 841.89] /Resources << /ProcSet [/PDF /Text /ImageB /ImageC] /Font << /F1 4 0 R /F2 5 0 R /F14 6 0 R >> >> /Contents 11 0 R >>
+
+13 0 obj
+<<
+/Filter /FlateDecode
+/Type /ObjStm
+/N 10
+/First 61
+/Length 703
+>>
+stream
+xœ½Tßo›0~ç¯¸Çö!Á6`ÌTUJ ¤ÑÖ­jÚUÚ´
+nŠ”àœ©ıïw‡aíVmÕ6i¶ï»ï¾óãÀ@@B q!D‘‚dÈ@B,bˆAhÀøÎ%Ã@I89ñü«Ç½?-l±5Ï¿(6ºCF—Şé©÷„èÿ¶®:øLLˆ€/ŸšCcà‹ÖT‡R·p’/òœ±˜1†j˜”( ÃŠ– 	œ£O(£Åá`¸Œ3ôåÎdìbÈßc£!~ÄJÂd*7ÿ—r-‡xMOrŠõ´º°¦…£e[Wi[ÜÙcÜ‚ÚnõXRDáÜ…ôá‘›“,1Òc*%$ŒòÊ­’Aÿ0ÊÎG|±|Â‘?ˆ\Ù±r¹{~…²g{OªÓû¶îlİhX‡[İÚÉyQšk87UVXGÙÁ„äœ'LqÅä§ã¡êÚ4¿DüprÓXÏ_nm?¥Eîùó¢ÓäÿLo¿j[—…ç/šÒTu³ÿ¦nfMWÉ8™›mõ/´ì9íújmšÍä]½¹·ÏI¯›z9Ÿ\_å\NÎ<?Ó]©›ªh,…Ñı‡ëÿ»lé*£•W’"jıØY½[5w¦‘—zƒGØ>ÂÑ¬2·OçC[é–„-çü˜Rì÷[½ÓÈ’„>3‰lë=İ]Õ?_?»¡gÏ^Š|‚ºĞ÷ÅNÿ¬+ß›¤Ìçæ«ˆˆ,ìiA)F`…£.gÍ_Ö9£­²ä÷ÍÂ„œ¥ÅşL¹s®±æ/Ûu¡–â\òÏuUNlŠ"d,¦{^a{S’Kİ™C[bûQ¹Öcü‹,Ç³×¸÷«òÏ‡JQı™P@Î±}öùr-ÔY½6:E´¦+8@Úšı«Êş¤@ê«QM…ò©Jş{eœËß ˆx­f
+endstream
 endobj
-xref
-0 13
-0000000000 65535 f 
-0000000015 00000 n 
-0000000064 00000 n 
-0000000129 00000 n 
-0000000393 00000 n 
-0000000490 00000 n 
-0000000592 00000 n 
-0000000715 00000 n 
-0000000895 00000 n 
-0000001067 00000 n 
-0000066790 00000 n 
-0000066982 00000 n 
-0000067112 00000 n 
-trailer
-<< /Size 13 /Root 1 0 R /Info 3 0 R >>
+
+14 0 obj
+<<
+/Size 15
+/Root 1 0 R
+/Info 3 0 R
+/Filter /FlateDecode
+/Type /XRef
+/Length 57
+/W [ 1 3 2 ]
+/Index [ 0 15 ]
+>>
+stream
+xœ-Ê»€0 ÄP; «±M–d¦ Ò<¹0ÀZnˆÆkl±Ç#Â³ÿKùvõm~çËt
+endstream
+endobj
+
 startxref
-67305
+66680
 %%EOF
